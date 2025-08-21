@@ -1,648 +1,262 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SwiftSite AI - Professional Websites</title>
-<meta content="SwiftSite AI creates fast, affordable, professional websites tailored to your needs. Get your digital presence started today." name="description"/>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
-<style>
-    :root {
-      --bg-color: #0b0c10;
-      --text-color: #fff;
-      --accent: #0ff;
-      --card-bg: rgba(31,31,31,0.85);
-    }
-    body.light-mode {
-      --bg-color: #f4f4f4;
-      --text-color: #111;
-      --accent: #0077ff;
-      --card-bg: #fff;
-    }
-    body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      overflow-x: hidden;
-      transition: background 0.3s, color 0.3s;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-    header {
-      position: relative;
-      text-align: center;
-      padding: 100px 20px;
-      background: linear-gradient(270deg, #0ff, #ff0, #f0f, #0ff);
-      background-size: 800% 800%;
-      animation: gradientAnimation 15s ease infinite;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    header::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      border-radius: 10px;
-    }
-    header > * {
-      position: relative;
-      z-index: 1;
-    }
-    header h1 {
-      font-size: 3em;
-      text-shadow: 0 0 15px var(--accent), 0 0 25px var(--accent);
-      margin: 0;
-    }
-    header p {
-      font-size: 1.3em;
-      text-shadow: 0 0 8px var(--accent), 0 0 15px var(--accent);
-      margin: 10px 0;
-    }
-    .toggle-mode {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      z-index: 2;
-    }
-    section {
-      position: relative;
-      padding: 70px 20px;
-      max-width: 1000px;
-      margin: auto;
-      border-radius: 15px;
-      margin-bottom: 50px;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      overflow: hidden;
-    }
-    section::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(270deg, rgba(0,255,255,0.2), rgba(255,0,255,0.2), rgba(255,255,0,0.2), rgba(0,255,255,0.2));
-      background-size: 600% 600%;
-      animation: overlayShift 20s ease infinite;
-      z-index: 0;
-    }
-    @keyframes overlayShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    section > * {
-      position: relative;
-      z-index: 1;
-    }
-    section h2 {
-  color: var(--text-color); /* readable in both modes */
-  text-align: center;
-  margin-bottom: 40px;
-  text-shadow: 0 0 12px var(--accent); /* glow effect */
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SwiftSite AI - Professional Website Design & Development</title>
+  <meta name="description" content="SwiftSite AI builds fast, affordable websites with custom design, logos, and branding. We help creators and businesses launch online quickly and with style." />
+  <meta name="keywords" content="web design, branding, logos, SwiftSite AI, fast websites, affordable websites, responsive design" />
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-section h3 {
-  color: var(--text-color);
-  margin-bottom: 20px;
-  text-shadow: 0 0 8px var(--accent); /* softer glow */
-}
+  <!-- ✅ Schema.org Business Info -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "SwiftSite AI",
+    "url": "https://swiftsiteai.com",
+    "logo": "A_digital_vector_illustration_features_a_neon-blue.png",
+    "telephone": "+15804837214",
+    "email": "service@swiftsireair.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Lawton",
+      "addressLocality": "Lawton",
+      "addressRegion": "OK",
+      "postalCode": "73505",
+      "addressCountry": "US"
+    }
+  }
+  </script>
 
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 25px;
-      margin: 20px 0;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(0,255,255,0.2);
-    }
-    .card:hover {
-      border-image: linear-gradient(45deg, #0ff, #f0f, #ff0) 1;
-      box-shadow: 0 0 30px rgba(0,255,255,0.6);
-      transform: translateY(-5px);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    a.button, button.button {
-      display: inline-block;
-      padding: 12px 25px;
-      color: var(--text-color);
-      text-decoration: none;
-      border-radius: 5px;
-      border: 2px solid var(--accent);
-      text-shadow: 0 0 5px var(--accent);
-      transition: all 0.3s ease;
-      background: transparent;
-      cursor: pointer;
-    }
-    a.button:hover, button.button:hover {
-      box-shadow: 0 0 20px var(--accent), 0 0 40px var(--accent);
-      transform: scale(1.05);
-    }
-    img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid var(--accent);
-      background: #111;
-      color: var(--text-color);
-    }
-    form input:focus, form textarea:focus {
-      outline: none;
-      box-shadow: 0 0 12px var(--accent);
-    }
-    #formMessage {
-      text-align: center;
-      margin-bottom: 15px;
-      font-weight: bold;
-      min-height: 24px;
-    }
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: var(--bg-color);
-      color: var(--accent);
-    }
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-      margin: 0 10px;
-      transition: 0.3s;
-    }
-    footer a:hover {
-      text-shadow: 0 0 10px var(--accent);
-    }
-    .values {
-      list-style: none;
-      padding: 0;
-    }
-    .values li {
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    @media (max-width: 600px) {
-      header h1 { font-size: 2em; }
-      header p { font-size: 1em; }
-    }
-  /* About Section & Panel */
-    section {
-      position: relative;
-      padding: 70px 20px;
-      max-width: 1000px;
-      margin: 0 auto 50px;
-      border-radius: 15px;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      overflow: hidden;
-    }
-    section h2 {
-      color: var(--accent);
-      text-align: center;
-      margin-bottom: 40px;
-      text-shadow: 0 0 10px var(--accent);
-    }
-    .values {
-      list-style: none;
-      padding: 0;
-    }
-    .values li {
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {--bg:#0b0c10;--text:#fff;--accent1:#00eaff;--accent2:#a020f0;}
+    body {margin:0;font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+    a {color:var(--accent1);text-decoration:none;}
 
-    /* Grid overlay context */
-    #about.grid-overlay {
-      position: relative;
-      overflow: hidden;
-    }
-    /* Subtle grid lines */
-    #about.grid-overlay::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+    /* ✅ Navbar */
+    nav {position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;display:flex;justify-content:center;align-items:center;gap:22px;z-index:50;padding:14px 20px;background:transparent;transition:.35s;}
+    nav.scrolled {background:rgba(0,0,0,.55);backdrop-filter:blur(6px);box-shadow:0 0 15px rgba(0,255,255,.35);}
+    nav a {color:#fff;font-weight:700;position:relative;}
+    nav a::after {content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--accent1);transition:.25s;}
+    nav a:hover::after {width:100%;}
+    .menu-toggle {display:none;font-size:2rem;cursor:pointer;color:var(--accent1);margin-left:auto;z-index:100;}
+    .nav-links {display:flex;gap:22px;}
+    @media(max-width:900px){nav{justify-content:flex-start;}.menu-toggle{display:block;}.nav-links{display:none;flex-direction:column;background:rgba(0,0,0,.95);position:absolute;top:60px;left:0;width:100%;padding:20px 0;text-align:center;}.nav-links.active{display:flex;}}
+
+    /* ✅ Banner */
+    .banner {position:relative;display:flex;align-items:flex-start;justify-content:space-between;padding:110px 10% 80px;min-height:680px;overflow:hidden;}
+    .banner video.banner-video {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(.55) contrast(1.15) saturate(1.25);}
+    .logo-title {display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .logo-title img {width:190px;filter:drop-shadow(0 0 30px rgba(0,234,255,.95));}
+    .logo-title h1 {font-size:3.6rem;font-weight:900;margin:0;color:var(--accent1);text-shadow:0 0 25px rgba(0,234,255,.9);}
+    .banner-left {flex:1;max-width:560px;}
+    .banner-left h2 {font-size:2.5rem;margin:0 0 14px;}
+    .alert {color:#f72585;}
+    .typed-text {display:inline-block;border-right:2px solid #f72585;padding-right:6px;white-space:nowrap;overflow:hidden;vertical-align:middle;}
+    .services-box {background:linear-gradient(135deg,#2e2e2e,#1a1a1a);padding:20px;border-radius:12px;box-shadow:0 0 25px rgba(0,255,255,.18);margin:14px 0 20px;}
+    .services-list {display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px;}
+    .cta-wrapper {display:flex;justify-content:center;margin-top:20px;}
+
+    /* ✅ Buttons */
+    .btn-primary,.banner-form button,.footer-banner a{padding:16px 36px;border-radius:12px;background:linear-gradient(135deg,#2e2e2e,#1a1a1a);color:var(--accent1);font-weight:900;text-transform:uppercase;box-shadow:0 0 14px rgba(0,234,255,.25);transition:.25s;border:none;cursor:pointer;}
+    .btn-primary:hover,.banner-form button:hover,.footer-banner a:hover{color:#fff;box-shadow:0 0 30px rgba(0,234,255,.85);transform:translateY(-2px);}
+
+    .banner-form {flex:1.25;min-width:400px;max-width:640px;background:linear-gradient(135deg,#2e2e2e,#1a1a1a);padding:46px;border-radius:14px;margin-top:220px;margin-left:80px;box-shadow:0 0 38px rgba(0,234,255,.28);text-align:center;}
+    .banner-form h3 {margin:0 0 20px;font-size:1.8rem;font-weight:900;color:var(--accent1);}
+    .banner-form input,.banner-form textarea {width:100%;padding:14px;margin:12px 0;border-radius:8px;border:1px solid #444;background:#111;color:#fff;}
+    .banner-form textarea::placeholder {color:#bbb;}
+    .form-actions {margin-top:20px;display:flex;justify-content:center;}
+    #form-status {margin-top:12px;font-weight:600;}
+
+    /* ✅ Footer banner */
+    .footer-banner {
+      padding: 60px 20px 80px;
+      background:#0b0c10;
       background-image:
-        repeating-linear-gradient(
-          to right,
-          rgba(255,255,255,0.05) 1px,
-          transparent 1px
-        ),
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,0.05) 1px,
-          transparent 1px
-        );
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
+        linear-gradient(45deg,rgba(255,255,255,.05)25%,transparent25%),
+        linear-gradient(-45deg,rgba(255,255,255,.05)25%,transparent25%),
+        linear-gradient(45deg,transparent75%,rgba(255,255,255,.05)75%),
+        linear-gradient(-45deg,transparent75%,rgba(255,255,255,.05)75%);
+      background-size:40px 40px;
+      text-align:center;
     }
-    /* Dark panel behind text */
-    .content-panel {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px 30px;
-      background: rgba(0,0,0,0.6);
-      border-radius: 12px;
-    }
+    .footer-banner h2 {margin:0 0 20px;font-size:1.8rem;font-weight:900;}
+    .footer-banner h2 span {color:#fff;}
+    .footer-banner h2 span.magenta{color:#f72585;text-shadow:0 0 12px rgba(247,37,133,.35);animation:glowMagenta 3s infinite alternate;}
+    .footer-banner h2 span.cyan{color:#00eaff;text-shadow:0 0 12px rgba(0,234,255,.7);animation:glowCyan 3s infinite alternate;}
+    @keyframes glowMagenta{from{text-shadow:0 0 5px rgba(247,37,133,.4);}to{text-shadow:0 0 20px rgba(247,37,133,.9);}}
+    @keyframes glowCyan{from{text-shadow:0 0 5px rgba(0,234,255,.4);}to{text-shadow:0 0 20px rgba(0,234,255,.9);}}
 
-    /* Cards, buttons, forms, footer… (leave these as you had them) */
+    /* ✅ Footer */
+    footer {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      padding:40px 20px;
+      color:#000;
+      background:#0b0c10;
+      background-image:
+        linear-gradient(45deg,rgba(255,255,255,.05)25%,transparent25%),
+        linear-gradient(-45deg,rgba(255,255,255,.05)25%,transparent25%),
+        linear-gradient(45deg,transparent75%,rgba(255,255,255,.05)75%),
+        linear-gradient(-45deg,transparent75%,rgba(255,255,255,.05)75%);
+      background-size:40px 40px;
+      border-top:2px solid var(--accent1);
+      margin:0;
+    }
+    footer .contact-card {background:linear-gradient(135deg,#2e2e2e,#1a1a1a);color:#fff;padding:16px 20px;border-radius:12px;box-shadow:0 0 18px rgba(0,234,255,.35);font-size:0.9rem;max-width:220px;text-align:left;flex:0 0 auto;}
+    footer .contact-card h4 {margin:0 0 10px;font-size:1rem;color:var(--accent1);font-weight:900;text-transform:uppercase;}
+    footer .contact-card p {margin:6px 0;font-size:0.9rem;}
+    footer .contact-card a {color:var(--accent1);font-weight:600;}
+    footer .footer-links {flex:1;text-align:center;}
 
-    @media (max-width: 600px) {
-      header h1 { font-size: 2em; }
-      header p  { font-size: 1em; }
-    }
-  
-    @media (max-width: 600px) {
-      header img[alt="SwiftSite AI Logo"] {
-        max-width: 180px;
-      }
-    }
-    
-    @media (max-width: 600px) {
-      header img[alt="SwiftSite AI Logo"] {
-        max-width: 250px;
-        opacity: 0.85;
-      }
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(1.05); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      animation: fadeIn 1.5s ease-in-out;
-    }
-    
-    @keyframes fadeInGlow {
-      0% { opacity: 0; transform: scale(1.05); filter: drop-shadow(0 0 0px cyan); }
-      50% { opacity: 0.7; filter: drop-shadow(0 0 20px cyan); }
-      100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0px cyan); }
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      animation: fadeInGlow 2s ease-in-out;
-    }
-    
-    @keyframes fadeInGlowPulse {
-      0% { opacity: 0; transform: scale(1.05); filter: drop-shadow(0 0 0px cyan); }
-      50% { opacity: 0.7; filter: drop-shadow(0 0 25px cyan); }
-      100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0px cyan); }
-    }
-    @keyframes pulseGlow {
-      0% { filter: drop-shadow(0 0 0px cyan); }
-      50% { filter: drop-shadow(0 0 15px cyan); }
-      100% { filter: drop-shadow(0 0 0px cyan); }
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      animation: fadeInGlowPulse 2s ease-in-out, pulseGlow 3s ease-in-out infinite 2s;
-    }
-    
-    header {
-      width: 100%;
-      height: 60vh; /* Hero section height */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    
-    header {
-      width: 100%;
-      height: 100vh; /* Full viewport height */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      background: transparent !important; /* Transparent background */
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      opacity: 0.7; /* Transparent logo */
-    }
-    
-    header {
-      width: 100%;
-      height: 70vh; /* Slightly taller than previous 60vh */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      background: transparent !important;
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      opacity: 0.85; /* Keep a nice balance of visibility */
-    }
-    
-    header {
-      position: relative;
-      width: 100%;
-      height: 70vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      border-radius: 0;
-      background: linear-gradient(270deg, #0ff, #ff0, #f0f, #0ff);
-      background-size: 800% 800%;
-      animation: gradientAnimation 15s ease infinite;
-    }
-    header::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5); /* overlay for readability */
-      z-index: 0;
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      opacity: 0.85;
-      position: relative;
-      z-index: 1;
-    }
-    
-    header {
-      height: 90vh; /* Increased height to 90% of viewport */
-    }
-    
-    header {
-      height: 40vh; /* Reduced height to 40% of viewport */
-    }
-    
-    header {
-      height: 40vh; /* Compact hero */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      max-width: 80%;
-      height: auto;
-      opacity: 0.8; /* Transparent look */
-      filter: drop-shadow(0 0 12px cyan);
-      animation: pulseAlive 4s ease-in-out infinite;
-    }
-    @keyframes pulseAlive {
-      0% { opacity: 0.7; filter: drop-shadow(0 0 5px cyan); }
-      50% { opacity: 0.9; filter: drop-shadow(0 0 25px cyan); }
-      100% { opacity: 0.7; filter: drop-shadow(0 0 5px cyan); }
-    }
-    
-    header img[alt="SwiftSite AI Logo"] {
-      max-width: 80%;
-      height: auto;
-      opacity: 0.8;
-      margin-left: -5%; /* Shift slightly left */
-      animation: pulseAliveColors 6s ease-in-out infinite;
-    }
-    @keyframes pulseAliveColors {
-      0%   { opacity: 0.7; filter: drop-shadow(0 0 5px cyan); }
-      25%  { opacity: 0.85; filter: drop-shadow(0 0 20px magenta); }
-      50%  { opacity: 0.9; filter: drop-shadow(0 0 25px yellow); }
-      75%  { opacity: 0.85; filter: drop-shadow(0 0 20px magenta); }
-      100% { opacity: 0.7; filter: drop-shadow(0 0 5px cyan); }
-    }
-    
-    header img[alt="SwiftSite AI Logo"] {
-      max-width: 80%;
-      height: auto;
-      opacity: 0.8;
-      margin-left: -5%;
-      animation: pulseAliveColors 6s ease-in-out infinite, floatLogo 5s ease-in-out infinite;
-    }
-    @keyframes floatLogo {
-      0%   { transform: translateY(0px); }
-      50%  { transform: translateY(-12px); }
-      100% { transform: translateY(0px); }
-    }
-    
-    header {
-      background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed; /* Parallax effect */
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      max-width: 80%;
-      height: auto;
-      opacity: 0.8;
-      margin-left: -12%; /* Nudge more left */
-      animation: pulseAliveColors 6s ease-in-out infinite, floatLogo 5s ease-in-out infinite;
-    }
-    
-    header {
-      position: relative;
-    }
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4); /* Dark overlay for contrast */
-      z-index: 0;
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      max-width: 60%; /* Smaller so background shows around */
-      height: auto;
-      opacity: 0.85;
-      margin-left: -10%; /* Slight left alignment */
-      position: relative;
-      z-index: 1;
-      animation: pulseAliveColors 6s ease-in-out infinite, floatLogo 5s ease-in-out infinite;
-    }
-    
-    header {
-      position: relative;
-      overflow: hidden;
-    }
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      animation: bgPanZoom 30s ease-in-out infinite alternate;
-      z-index: 0;
-    }
-    @keyframes bgPanZoom {
-      0%   { transform: scale(1) translate(0,0); }
-      50%  { transform: scale(1.1) translate(-2%, -2%); }
-      100% { transform: scale(1.05) translate(2%, 2%); }
-    }
-    header img[alt="SwiftSite AI Logo"] {
-      max-width: 50%; /* Smaller so background shows more */
-      height: auto;
-      opacity: 0.85;
-      margin-left: -8%; /* Slight left positioning */
-      position: relative;
-      z-index: 1;
-      animation: pulseAliveColors 6s ease-in-out infinite, floatLogo 5s ease-in-out infinite;
-    }
-    </style>
+    /* ✅ Sticky CTA */
+    .sticky-cta{display:none;position:fixed;bottom:20px;right:20px;z-index:100;padding:14px 28px;}
+    @media(max-width:900px){.sticky-cta{display:block;}}
+
+    /* ✅ Mobile adjustments */
+    @media(max-width:900px){.banner{flex-direction:column;align-items:center;padding:100px 5% 60px;text-align:center;}.logo-title{flex-direction:column;gap:6px;}.logo-title img{width:120px;}.logo-title h1{font-size:2.2rem;}.banner-left{max-width:100%;margin-bottom:30px;}.services-list{grid-template-columns:1fr;}.banner-form{width:100%;margin:20px 0 0;padding:30px 20px;}.btn-primary,.banner-form button,.footer-banner a{width:100%;}}
+    @media(max-width:600px){footer{flex-direction:column;align-items:center;text-align:center;}footer .contact-card{margin-bottom:20px;max-width:100%;text-align:center;}}
+  </style>
 </head>
 <body>
-<button aria-label="Toggle light and dark mode" class="toggle-mode" onclick="document.body.classList.toggle('light-mode')">
-    🌙
-  </button>
-<header data-aos="fade-down" style="padding: 0; margin: 0; border-radius: 0; width: 100%; max-width: 100%; overflow: hidden;">
-<img alt="SwiftSite AI Logo" src="Logo.png" style="width: 100%; height: auto; display: block; margin: 0; opacity: 0.95;"/>
-</header>
-<!-- About Us Section with Grid Overlay -->
-<section class="grid-overlay" data-aos="fade-up" id="about" style="background-image: url('https://images.unsplash.com/39/lIZrwvbeRuuzqOoWJUEn_Photoaday_CSD%20%281%20of%201%29-5.jpg?q=80&amp;w=1740&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0');">
-<div class="content-panel" data-aos="fade-up">
-<h2 data-aos="fade-down">About Us</h2>
-<h3 data-aos="fade-right" data-aos-delay="100">Mission Statement</h3>
-<p data-aos="fade-left" data-aos-delay="150">
-        “Our mission is to help businesses and creators bring their ideas online quickly and affordably. We build websites that reflect your unique vision, designed with care and delivered faster than traditional methods.”
-      </p>
-<h3 data-aos="fade-right" data-aos-delay="200">Vision Statement</h3>
-<p data-aos="fade-left" data-aos-delay="250">
-        “We envision a world where every individual and business—no matter their size or budget—can proudly showcase their ideas online through modern and affordable websites.”
-      </p>
-<h3 data-aos="fade-right" data-aos-delay="300">Core Values</h3>
-<ul class="values">
-<li data-aos="fade-up" data-aos-delay="350">Client First – Every website is built around your needs and vision.</li>
-<li data-aos="fade-up" data-aos-delay="400">Speed &amp; Efficiency – Fast delivery without sacrificing quality.</li>
-<li data-aos="fade-up" data-aos-delay="450">Affordability – Professional websites at fair, transparent prices.</li>
-<li data-aos="fade-up" data-aos-delay="500">Creativity – Designs that reflect the unique personality of each client.</li>
-<li data-aos="fade-up" data-aos-delay="550">Trust – Honest communication and reliable results.</li>
-</ul>
-</div>
-</section>
-<!-- Services Section -->
-<section data-aos="fade-up" id="services" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80');">
-<h2>Our Services 
-Fast, Affordable, And Professional Websites Created For You, By You.
-Your Digital Presence Starts Here.</h2>
-<div class="grid">
-<div class="card" data-aos="fade-right">
-<h3>AI Website Builder</h3>
-<p>Create professional websites instantly using AI-driven templates tailored to your needs.</p>
-</div>
-<div class="card" data-aos="fade-left">
-<h3>Custom Designs</h3>
-<p>Get unique, visually stunning designs that represent your brand perfectly.</p>
-</div>
-<div class="card" data-aos="fade-right">
-<h3>SEO &amp; Performance</h3>
-<p>Optimized for search engines and speed, ensuring your website performs at its best.</p>
-</div>
-<div class="card" data-aos="fade-left">
-<h3>Support &amp; Maintenance</h3>
-<p>Reliable ongoing support and maintenance so your site stays updated and secure.</p>
-</div>
-</div>
-</section>
-<section data-aos="fade-up" id="portfolio" style="background-image: url('https://images.unsplash.com/photo-1533134486753-c833f0ed4866?q=80&amp;w=1740&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
-<h2>Portfolio</h2>
-<div class="grid">
-<!-- Bakery -->
-<div class="card" data-aos="zoom-in">
-<img alt="Sweet Treats Bakery" src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?q=80&amp;w=870&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-<h3>Sweet Treats Bakery</h3>
-<p>Designed landing page for a local bakery featuring menu, specials, and contact info.</p>
-</div>
-<!-- Fitness Studio -->
-<div class="card" data-aos="zoom-in" data-aos-delay="200">
-<img alt="FitLife Studio" src="https://images.unsplash.com/photo-1616279969856-759f316a5ac1?q=80&amp;w=2565&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-<h3>FitLife Studio</h3>
-<p>Full 5-page website including class schedule, trainer profiles, blog section, and contact form.</p>
-</div>
-<!-- Technology Startup -->
-<div class="card" data-aos="zoom-in" data-aos-delay="400">
-<img alt="TechNova Solutions" src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&amp;w=2574&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-<h3>TechNova Solutions</h3>
-<p>Professional website for a tech startup. Includes services, portfolio showcase, team bios, and newsletter signup.</p>
-</div>
-</div>
-</section>
-<!-- Contact Section -->
-<section data-aos="fade-up" id="contact" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=1600&amp;q=80');">
-<h2>Contact Us</h2>
-<form id="contactForm">
-<div id="formMessage"></div>
-<input name="name" placeholder="Your Name" required="" type="text"/>
-<input name="email" placeholder="Your Email" required="" type="email"/>
-<textarea name="message" placeholder="Your Message" required="" rows="5"></textarea>
-<button class="button" type="submit">Send Message</button>
-</form>
-</section>
-<footer>
-<p>© 2025 SwiftSite AI. All rights reserved.</p>
-<p>
-<a href="#about">About</a> | 
-      <a href="#services">Services</a> | 
-      <a href="#contact">Contact</a>
-</p>
-</footer>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init({ duration: 1200, once: true });
+  <nav>
+    <div class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
 
-    // Simple form submission using Formspree
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const formData = new FormData(this);
-      fetch('https://formspree.io/f/xblkekwj', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      }).then(response => {
-        const msgDiv = document.getElementById('formMessage');
-        if(response.ok) {
-          msgDiv.innerHTML = "Message sent successfully!";
-          this.reset();
-        } else {
-          msgDiv.innerHTML = "Oops! There was a problem.";
-        }
-      }).catch(error => {
-        document.getElementById('formMessage').innerHTML = "Oops! There was a problem.";
-      });
-    });
+  <section class="banner">
+    <video class="banner-video" autoplay muted loop playsinline preload="metadata">
+      <source src="Createawebsite.mp4" type="video/mp4" />
+    </video>
+    <div class="banner-left">
+      <div class="logo-title">
+        <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo" loading="lazy"/>
+        <h1>SwiftSite AI</h1>
+      </div>
+      <h2>Looking For <span class="alert typed-text"></span></h2>
+      <p>Your <span style="color:var(--accent1)">Digital Revolution</span> begins with <strong>SwiftSite AI</strong>.  
+      We craft stunning websites, logos, and branding that bring your vision to life.  
+      Our team helps creators and businesses launch online quickly, affordably, and with style.  
+      Every site is designed with care, tailored to your brand, and delivered faster than traditional methods—so you can focus on growing while we handle the web.</p>
+      <div class="services-box">
+        <h3>Professional Website Design & Development Services</h3>
+        <div class="services-list">
+          <div>✓ Unique Custom Design</div>
+          <div>✓ SEO Optimized</div>
+          <div>✓ Unlimited Pages/Revisions</div>
+          <div>✓ Mobile Responsive Design</div>
+          <div>✓ Unique Custom Logos</div>
+          <div>✓ 100% Money Back Guarantee</div>
+        </div>
+      </div>
+      <div class="cta-wrapper">
+        <a href="contact.html" class="btn-primary">Get Started</a>
+      </div>
+    </div>
+
+    <!-- ✅ Formspree Form with Success/Error -->
+    <form class="banner-form" id="contact-form">
+      <h3>Let’s Build Your Website Today!</h3>
+      <input type="text" name="name" placeholder="Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <textarea name="message" rows="4" placeholder="Tell us about your project, how can we help?" required></textarea>
+      <input type="hidden" name="_subject" value="New SwiftSite AI Inquiry" />
+      <div class="form-actions">
+        <button type="submit">Send Us a Message</button>
+      </div>
+      <p id="form-status"></p>
+    </form>
+  </section>
+
+  <!-- ✅ Footer Banner -->
+  <div class="footer-banner">
+    <h2>
+      <span>Swift</span>
+      <span class="magenta">Innovation</span>
+      <span>for a Faster</span>
+      <span class="cyan">Future</span>
+      <span>Online</span>
+    </h2>
+    <a href="contact.html" class="btn-primary">Let’s Build Together</a>
+  </div>
+
+  <!-- ✅ Footer -->
+  <footer>
+    <div class="contact-card">
+      <h4>Get in Touch</h4>
+      <p>📧 <a href="mailto:service@swiftsireair.com">service@swiftsireair.com</a></p>
+      <p>📞 <a href="tel:+15804837214">(580) 483-7214</a></p>
+      <p>📍 Lawton, OK 73505</p>
+    </div>
+    <div class="footer-links">
+      <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="services.html">Services</a> |
+        <a href="portfolio.html">Portfolio</a> |
+        <a href="faq.html">FAQ</a> |
+        <a href="contact.html">Contact</a> |
+        <a href="privacy.html">Privacy Policy</a>
+      </p>
+      <p>&copy; 2025 SwiftSite AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ✅ Sticky Mobile CTA -->
+  <a href="contact.html" class="btn-primary sticky-cta">Get Started</a>
+
+  <!-- ✅ Typing Animation + Form Handling -->
+  <script>
+  const typedText=document.querySelector(".typed-text");
+  const words=["Websites","Branding","Logos","SEO","E-Commerce"];
+  let i=0,j=0,isDeleting=false;
+  function type(){
+    let currentWord=words[i];
+    if(!isDeleting){
+      typedText.textContent=currentWord.substring(0,j+1);j++;
+      if(j===currentWord.length){isDeleting=true;setTimeout(type,1200);return;}
+    }else{
+      typedText.textContent=currentWord.substring(0,j-1);j--;
+      if(j===0){isDeleting=false;i=(i+1)%words.length;}
+    }
+    setTimeout(type,isDeleting?100:150);
+  }
+  type();
+
+  document.getElementById("menu-toggle").addEventListener("click",()=>{document.querySelector(".nav-links").classList.toggle("active");});
+
+  // ✅ Formspree with success/error messages
+  const form=document.getElementById("contact-form");
+  const status=document.getElementById("form-status");
+  form.addEventListener("submit",async(e)=>{
+    e.preventDefault();
+    const data=new FormData(form);
+    try{
+      let response=await fetch("https://formspree.io/f/xnnzykyd",{method:"POST",body:data,headers:{'Accept':'application/json'}});
+      if(response.ok){
+        status.style.color="limegreen";
+        status.textContent="✅ Thanks! Your message has been sent.";
+        form.reset();
+      }else{
+        status.style.color="red";
+        status.textContent="⚠️ Oops! Something went wrong. Please try again.";
+      }
+    }catch(error){
+      status.style.color="red";
+      status.textContent="⚠️ Network error. Please check your connection.";
+    }
+  });
   </script>
 </body>
 </html>
