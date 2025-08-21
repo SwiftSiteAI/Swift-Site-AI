@@ -95,7 +95,7 @@
     .form-actions {margin-top:20px;display:flex;justify-content:center;}
     #form-status {margin-top:12px;font-weight:600;}
 
-    /* ✅ Footer banner (now part of video background container) */
+    /* ✅ Footer banner (inside video background container) */
     .footer-banner {
       padding: 60px 20px 80px;
       text-align: center;
@@ -111,6 +111,7 @@
 
     /* ✅ Footer (cube background for consistency) */
     footer {
+      position: relative;
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
@@ -138,6 +139,21 @@
       margin-top:20px;
     }
     footer .footer-links p:last-child {color: var(--accent1);font-weight: 600;}
+
+    /* ✅ Footer Logo */
+    .footer-logo {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+    .footer-logo img {
+      width: 90px;
+      filter: drop-shadow(0 0 20px rgba(0,234,255,.85));
+      transition: transform .3s ease;
+    }
+    .footer-logo img:hover {
+      transform: scale(1.08);
+    }
 
     /* ✅ Mobile adjustments */
     @media(max-width:900px){.banner{flex-direction:column;align-items:center;padding:100px 5% 60px;text-align:center;}.logo-title{flex-direction:column;gap:6px;}.logo-title img{width:120px;}.logo-title h1{font-size:2.2rem;}.banner-left{max-width:100%;margin-bottom:30px;}.services-list{grid-template-columns:1fr;}.banner-form{width:100%;margin:20px 0 0;padding:30px 20px;}.btn-primary,.banner-form button,.footer-banner a{width:100%;}}
@@ -238,6 +254,10 @@
       </p>
       <p>&copy; 2025 SwiftSite AI. All rights reserved.</p>
     </div>
+    <!-- ✅ Footer Logo -->
+    <div class="footer-logo">
+      <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
+    </div>
   </footer>
 
   <!-- ✅ Typing Animation + Form Handling -->
@@ -270,17 +290,10 @@
       let response=await fetch("https://formspree.io/f/xnnzykyd",{method:"POST",body:data,headers:{'Accept':'application/json'}});
       if(response.ok){
         status.style.color="limegreen";
-        status.textContent="✅ Thanks! Your message has been sent.";
+        status.textContent="Thanks! Your message has been sent.";
         form.reset();
-        setTimeout(()=>{status.textContent="";},5000);
-      }else{
-        status.style.color="red";
-        status.textContent="⚠️ Oops! Something went wrong. Please try again.";
-      }
-    }catch(error){
-      status.style.color="red";
-      status.textContent="⚠️ Network error. Please check your connection.";
-    }
+      }else{status.style.color="red";status.textContent="Oops! Something went wrong.";}
+    }catch(err){status.style.color="red";status.textContent="Network error. Please try again.";}
   });
   </script>
 </body>
