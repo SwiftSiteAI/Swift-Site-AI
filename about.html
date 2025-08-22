@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About SwiftSite AI - Our Story & Values</title>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="Discover SwiftSite AI’s journey, mission, and values. Learn how we help businesses bring ideas online with honesty, creativity, and affordability." />
+  <meta property="og:title" content="About SwiftSite AI - Our Story & Values" />
+  <meta property="og:description" content="Discover SwiftSite AI’s journey, mission, and values. Learn how we help businesses bring ideas online with honesty, creativity, and affordability." />
+  <meta property="og:image" content="A_digital_vector_illustration_features_a_neon-blue.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="A_digital_vector_illustration_features_a_neon-blue.png" type="image/png">
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SwiftSite AI",
+    "url": "https://swiftsiteai.com",
+    "logo": "https://swiftsiteai.com/A_digital_vector_illustration_features_a_neon-blue.png",
+    "sameAs": [
+      "https://www.facebook.com/yourpage",
+      "https://www.linkedin.com/company/yourcompany"
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --accent-cyan: #00e5ff;
+      --dark-bg: #0b0c10;
+      --light-bg: #ffffff;
+      --text-dark: #222;
+      --text-light: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body, * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family:'Roboto',sans-serif; color:var(--text-dark); background:var(--light-bg); }
+
+    /* Navbar */
+    nav {
+      position: fixed; top: 0; left: 0; width:100%;
+      display:flex; align-items:center; justify-content:center;
+      padding:15px 40px; background: transparent;
+      transition: background 0.4s; z-index:10;
+    }
+    nav.scrolled { background: rgba(0,0,0,0.85); }
+    nav .logo { position:absolute; left:40px; }
+    nav .logo img { height:60px; transition:0.3s; animation: pulseGlow 3s infinite ease-in-out; }
+    nav .logo img:hover { filter: drop-shadow(0 0 20px rgba(0,229,255,1)); }
+
+    nav .nav-links { display:flex; gap:30px; }
+    nav .nav-links a {
+      color: var(--text-light); text-decoration:none;
+      font-weight:600; transition:0.3s;
+    }
+    nav .nav-links a:hover { color: var(--accent-cyan); }
+
+    /* Hamburger */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: var(--accent-cyan);
+      cursor: pointer;
+      position: absolute;
+      right: 40px;
+    }
+    @media(max-width:900px) {
+      nav .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: rgba(0,0,0,0.95);
+        flex-direction: column;
+        width: 220px;
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
+      }
+      nav .nav-links.active { display:flex; }
+      .menu-toggle { display:block; }
+    }
+
+    /* Glow Animation */
+    @keyframes pulseGlow {
+      0%   { filter: drop-shadow(0 0 5px rgba(0,229,255,0.4)); }
+      50%  { filter: drop-shadow(0 0 20px rgba(0,229,255,0.9)); }
+      100% { filter: drop-shadow(0 0 5px rgba(0,229,255,0.4)); }
+    }
+
+    /* Hero */
+    header {
+      position:relative; height:70vh; display:flex;
+      align-items:center; justify-content:center; text-align:center;
+      color:var(--text-light); overflow:hidden;
+    }
+    .bg-video {
+      position:absolute;
+      top:0; left:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-2;
+      background:#000;
+    }
+    header .overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:-1; }
+    .hero-content { position:relative; z-index:1; max-width:800px; padding:0 20px; }
+    header h1 { font-size:2.8rem; margin-bottom:15px; }
+    header p { font-size:1.1rem; max-width:700px; margin:0 auto 20px; }
+    header .btn {
+      background:#222; color:var(--accent-cyan); border:none;
+      padding:12px 28px; font-size:1rem; border-radius:10px;
+      cursor:pointer; transition:0.3s; font-weight:600;
+      box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    }
+    header .btn:hover { background:#111; box-shadow:0 0 15px rgba(0,229,255,0.6); }
+
+    /* About */
+    .about-section {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:40px; align-items:stretch;
+      max-width:1200px; margin:80px auto; padding:0 20px;
+    }
+    .about-image img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+    .about-text h2 { font-size:2rem; margin-bottom:15px; padding-left:15px; position:relative; }
+    .about-text h2::before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--accent-cyan); border-radius:3px; }
+    .about-text h3 { font-size:1.2rem; margin-bottom:15px; color:#444; }
+    .about-text p { line-height:1.6; margin-bottom:15px; }
+    @media(max-width:900px) { .about-section { grid-template-columns:1fr; } }
+
+    /* Mission/Vision/Values */
+    .mvv-section { padding:80px 20px; text-align:center; }
+    .mvv-header h2 { font-size:2rem; margin-bottom:10px; }
+    .mvv-header h2 span { color:var(--accent-cyan); }
+    .mvv-header p { margin-bottom:50px; color:#444; }
+    .mvv-cards { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; }
+    .mvv-card { width:280px; height:280px; perspective:1000px; }
+    .mvv-card-inner { position:relative; width:100%; height:100%; transition:transform 0.8s; transform-style:preserve-3d; }
+    .mvv-card:hover .mvv-card-inner { transform:rotateY(180deg); }
+    .mvv-card-front, .mvv-card-back {
+      position:absolute; width:100%; height:100%; backface-visibility:hidden;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      border-radius:10px;
+    }
+    .mvv-card-front { background:#222; color:#fff; font-size:1.2rem; text-align:center; }
+    .mvv-card-front i { font-size:2rem; margin-bottom:10px; color:var(--accent-cyan); }
+    .mvv-card-back { background:#111; color:#fff; padding:20px; transform:rotateY(180deg); font-size:0.95rem; line-height:1.5; text-align:left; }
+    @media(max-width:900px) {
+      .mvv-cards { flex-direction: column; align-items:center; }
+      .mvv-card { width:90%; max-width:350px; }
+    }
+
+    /* Contact Banner */
+    .contact-banner {
+      background:#111; padding:40px 20px;
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:30px; align-items:center;
+      max-width:1000px; margin:60px auto;
+      border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.6);
+    }
+    .contact-banner img { width:100%; height:100%; max-height:350px; object-fit:cover; border-radius:10px; }
+    .contact-banner h2 { font-size:1.8rem; margin-bottom:10px; color:#fff; }
+    .contact-banner h2 span { color:var(--accent-cyan); }
+    .contact-banner p { margin-bottom:20px; color:#ddd; }
+    .contact-banner .form-fields { display:grid; gap:15px; }
+    .contact-banner input, .contact-banner textarea {
+      width:100%; padding:12px; border:1px solid #333; border-radius:6px;
+      font-size:1rem; background:#222; color:#fff; display:block;
+    }
+    .contact-banner textarea { min-height:100px; resize:vertical; }
+    .contact-banner button {
+      margin-top:25px; background:#222; color:var(--accent-cyan);
+      padding:14px 30px; border:none; border-radius:8px; font-weight:600;
+      cursor:pointer; transition:0.3s; display:block; margin-left:auto; margin-right:auto;
+    }
+    .contact-banner button:hover { background:#111; box-shadow:0 0 20px rgba(0,229,255,0.8); }
+    @media(max-width:900px) { .contact-banner { grid-template-columns:1fr; } }
+
+    /* Footer */
+    footer {
+      background: #0b0c10 url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      background-size: repeat;
+      color: var(--text-light);
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 80px;
+      position: relative;
+      border-top: 2px solid #111;
+    }
+    footer a { color: #fff; margin: 0 10px; text-decoration:none; transition:0.3s; }
+    footer a:hover { color: var(--accent-cyan); text-shadow:0 0 10px rgba(0,229,255,0.8); }
+
+    /* Floating Logo */
+    .footer-logo { position:fixed; right:20px; bottom:20px; z-index:100; }
+    .footer-logo img { height:100px; transition:0.3s; animation:pulseGlow 3s infinite ease-in-out; }
+    .footer-logo img:hover { filter: drop-shadow(0 0 30px rgba(0,229,255,1)); }
+
+    .brand { color:var(--accent-cyan); font-weight:700; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav role="navigation">
+    <a href="index.html" class="logo"><img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo"></a>
+    <div class="menu-toggle" aria-label="Open Menu"><i class="fas fa-bars"></i></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header role="banner">
+    <video autoplay muted loop playsinline preload="auto" class="bg-video">
+      <source src="NATURE.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>From a Simple Hobby to the First Steps of <span class="brand">SwiftSite AI</span></h1>
+      <p>The Beginning of Our Journey</p>
+      <a href="#contact" class="btn">Let’s Connect</a>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section class="about-section">
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="SwiftSite AI Story">
+    </div>
+    <div class="about-text">
+      <h2>From a Simple Hobby to the First Steps of SwiftSite AI</h2>
+      <h3>The Beginning of Our Journey</h3>
+      <p>Being in the service and moving around a lot, I wanted to build something I could carry with me wherever life led. That idea grew into a passion for creating websites.</p>
+      <p>What started as a hobby—experimenting with design and code for fun—quickly became something bigger: helping others bring their ideas online. Along the way, I realized that many small businesses and creators struggled to afford professional websites. That’s when I decided to turn this passion into something real.</p>
+      <p>My goal is simple: to make modern, high-quality websites accessible to anyone, no matter their budget or background. I may be at the beginning of this journey, but every project fuels my excitement to learn, grow, and create something meaningful.</p>
+      <p>At its core, this work is built on the belief that even the smallest idea can grow into something amazing with the right foundation online.</p>
+    </div>
+  </section>
+
+  <!-- MISSION / VISION / VALUES -->
+  <section class="mvv-section">
+    <div class="mvv-header">
+      <h2>Our <span>Mission</span>, Vision & Values</h2>
+      <p>What drives SwiftSite AI and shapes our approach to web design and development.</p>
+    </div>
+    <div class="mvv-cards">
+      <div class="mvv-card">
+        <div class="mvv-card-inner">
+          <div class="mvv-card-front"><i class="fas fa-bullseye"></i> Mission</div>
+          <div class="mvv-card-back">Our mission is to make high-quality, professional websites accessible to everyone—no matter their budget or background. We empower individuals and businesses to establish their online presence with confidence and creativity.</div>
+        </div>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-card-inner">
+          <div class="mvv-card-front"><i class="fas fa-eye"></i> Vision</div>
+          <div class="mvv-card-back">Our vision is to be a trusted partner for creators, entrepreneurs, and small businesses worldwide. We strive to deliver sites that not only look amazing but also work seamlessly, helping ideas grow into impactful realities online.</div>
+        </div>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-card-inner">
+          <div class="mvv-card-front"><i class="fas fa-heart"></i> Values</div>
+          <div class="mvv-card-back">We value honesty, creativity, and accessibility. Every project is built with attention to detail, transparency, and the belief that great design should be within reach for everyone.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-banner">
+    <div>
+      <img src="https://images.unsplash.com/photo-1586769852044-692d6e3703f0?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Contact Us">
+    </div>
+    <div>
+      <h2>Let’s <span>Connect</span></h2>
+      <p>You have a vision. We have the resources. Together, we can create something extraordinary. Fill out the form and we’ll get back to you as soon as we can.</p>
+      <form action="https://formspree.io/f/yourformid" method="POST">
+        <div class="form-fields">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 SwiftSite AI. All rights reserved.</p>
+    <p>
+      <a href="index.html">Home</a> |
+      <a href="services.html">Services</a> |
+      <a href="pricing.html">Pricing</a> |
+      <a href="portfolio.html">Portfolio</a> |
+      <a href="faq.html">FAQ</a> |
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer
+  <!-- Floating Logo Bottom Right -->
+  <div class="footer-logo">
+    <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Navbar scroll background
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Hamburger menu toggle
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
