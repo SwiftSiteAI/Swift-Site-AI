@@ -19,21 +19,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- Schema Markup -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "SwiftSite AI",
-    "url": "https://swiftsiteai.com",
-    "logo": "https://swiftsiteai.com/A_digital_vector_illustration_features_a_neon-blue.png",
-    "sameAs": [
-      "https://www.facebook.com/yourpage",
-      "https://www.linkedin.com/company/yourcompany"
-    ]
-  }
-  </script>
-
   <style>
     :root {
       --accent-cyan: #00e5ff;
@@ -47,49 +32,71 @@
     body, * { box-sizing: border-box; margin:0; padding:0; }
     body { font-family:'Roboto',sans-serif; color:var(--text-dark); background:var(--light-bg); }
 
-    /* Navbar */
+    /* Navbar Sidebar */
     nav {
-      position: fixed; top: 0; left: 0; width:100%;
-      display:flex; align-items:center; justify-content:center;
-      padding:15px 40px; background: transparent;
-      transition: background 0.4s; z-index:10;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 10px;
+      background: transparent !important;
+      z-index: 10;
+      transition: color 0.3s;
     }
-    nav.scrolled { background: rgba(0,0,0,0.85); }
-    nav .logo { position:absolute; left:40px; }
-    nav .logo img { height:60px; transition:0.3s; animation: pulseGlow 3s infinite ease-in-out; }
-    nav .logo img:hover { filter: drop-shadow(0 0 20px rgba(0,229,255,1)); }
-
-    nav .nav-links { display:flex; gap:30px; }
+    nav .logo {
+      margin-bottom: 40px;
+    }
+    nav .logo img {
+      height: 50px;
+      transition: 0.3s;
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+    nav .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
     nav .nav-links a {
-      color: var(--text-light); text-decoration:none;
-      font-weight:600; transition:0.3s;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: 0.3s;
+      position: relative;
     }
     nav .nav-links a:hover { color: var(--accent-cyan); }
 
-    /* Hamburger */
-    .menu-toggle {
-      display: none;
-      font-size: 1.8rem;
-      color: var(--accent-cyan);
-      cursor: pointer;
+    /* Scrolled state → icons black */
+    nav.scrolled .nav-links a { color: var(--text-dark); }
+    nav.scrolled .nav-links a:hover { color: var(--accent-cyan); }
+
+    /* Custom Tooltips */
+    nav .nav-links a::after {
+      content: attr(data-label);
       position: absolute;
-      right: 40px;
+      left: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, left 0.3s;
     }
-    @media(max-width:900px) {
-      nav .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background: rgba(0,0,0,0.95);
-        flex-direction: column;
-        width: 220px;
-        padding: 20px;
-        border-radius: 0 0 10px 10px;
-      }
-      nav .nav-links.active { display:flex; }
-      .menu-toggle { display:block; }
+    nav .nav-links a:hover::after {
+      opacity: 1;
+      left: 70px;
     }
+
+    .menu-toggle { display: none !important; }
 
     /* Glow Animation */
     @keyframes pulseGlow {
@@ -122,6 +129,7 @@
       padding:12px 28px; font-size:1rem; border-radius:10px;
       cursor:pointer; transition:0.3s; font-weight:600;
       box-shadow:0 4px 10px rgba(0,0,0,0.2);
+      text-decoration: none;
     }
     header .btn:hover { background:#111; box-shadow:0 0 15px rgba(0,229,255,0.6); }
 
@@ -147,7 +155,7 @@
     .mvv-card { width:280px; height:280px; perspective:1000px; cursor:pointer; }
     .mvv-card-inner { position:relative; width:100%; height:100%; transition:transform 0.8s; transform-style:preserve-3d; }
     .mvv-card:hover .mvv-card-inner { transform:rotateY(180deg); }
-    .mvv-card.flipped .mvv-card-inner { transform:rotateY(180deg); } /* for mobile tap */
+    .mvv-card.flipped .mvv-card-inner { transform:rotateY(180deg); }
     .mvv-card-front, .mvv-card-back {
       position:absolute; width:100%; height:100%; backface-visibility:hidden;
       display:flex; flex-direction:column; justify-content:center; align-items:center;
@@ -212,16 +220,16 @@
 <body>
   <!-- Navbar -->
   <nav role="navigation">
-    <a href="index.html" class="logo"><img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo"></a>
-    <div class="menu-toggle" aria-label="Open Menu"><i class="fas fa-bars"></i></div>
+    <a href="index.html" class="logo">
+      <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
+    </a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="portfolio.html">Portfolio</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-label="Home"><i class="fas fa-home"></i></a>
+      <a href="about.html" data-label="About"><i class="fas fa-info-circle"></i></a>
+      <a href="services.html" data-label="Services"><i class="fas fa-cogs"></i></a>
+      <a href="portfolio.html" data-label="Portfolio"><i class="fas fa-briefcase"></i></a>
+      <a href="faq.html" data-label="FAQ"><i class="fas fa-question-circle"></i></a>
+      <a href="contact.html" data-label="Contact"><i class="fas fa-envelope"></i></a>
     </div>
   </nav>
 
@@ -285,7 +293,7 @@
   <!-- CONTACT -->
   <section id="contact" class="contact-banner">
     <div>
-      <img src="https://images.unsplash.com/photo-1586769852044-692d6e3703f0?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Contact Us">
+      <img src="https://images.unsplash.com/photo-1586769852044-692d6e3703f0?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90oy1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Contact Us">
     </div>
     <div>
       <h2>Let’s <span>Connect</span></h2>
@@ -307,39 +315,37 @@
     <p>
       <a href="index.html">Home</a> |
       <a href="services.html">Services</a> |
-      <a href="pricing.html">Pricing</a> |
       <a href="portfolio.html">Portfolio</a> |
       <a href="faq.html">FAQ</a> |
       <a href="contact.html">Contact</a>
     </p>
   </footer>
+
   <!-- Floating Logo Bottom Right -->
   <div class="footer-logo">
-    <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
+    <a href="index.html">
+      <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
+    </a>
   </div>
 
   <!-- Scripts -->
   <script>
-    // Navbar scroll background
-    window.addEventListener('scroll', function() {
-      const nav = document.querySelector('nav');
-      if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    });
-
-    // Hamburger menu toggle
-    document.querySelector('.menu-toggle').addEventListener('click', function() {
-      document.querySelector('.nav-links').classList.toggle('active');
-    });
-
     // MVV card click-to-flip (for mobile)
     document.querySelectorAll('.mvv-card').forEach(card => {
       card.addEventListener('click', () => {
         card.classList.toggle('flipped');
       });
+    });
+
+    // Change navbar icon colors after scrolling past hero
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      const nav = document.querySelector('nav');
+      if (window.scrollY > header.offsetHeight - 80) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
     });
   </script>
 </body>
