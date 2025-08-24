@@ -69,11 +69,11 @@
         margin: 120px auto 80px auto !important;
         max-width: 92% !important;
         padding: 20px !important;
-        background: rgba(255,255,255,0.9) !important;
-        backdrop-filter: blur(6px) !important;
+        background: rgba(255, 255, 255, 0.6) !important;
+        backdrop-filter: blur(10px) !important;
         border-radius: 16px !important;
         text-align: center !important;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
         z-index: 40 !important;
       }
       .mobile-overlay h2 { font-size:1.6rem !important; margin-bottom:10px !important; }
@@ -83,11 +83,21 @@
       /* Hide floating desktop text */
       .tagline, .leftblock { display:block !important; position:static !important; margin:0 !important; text-align:center !important; }
 
-      /* Navbar at bottom */
+      /* ✅ Navbar at bottom */
       .navbar {
-        position: fixed !important; bottom:0 !important; left:0 !important; width:100% !important; height:60px !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        top: auto !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 60px !important;
         background: rgba(255,255,255,0.95) !important;
-        display: flex !important; flex-direction: row !important; justify-content: space-around !important; align-items: center !important; z-index:999 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        gap: 0 !important;
+        z-index: 999 !important;
       }
       .navbar a { flex:1 !important; border-radius:0 !important; background:none !important; font-size:20px !important; color:#000 !important; }
       .navbar a::after { display:none !important; }
@@ -116,29 +126,23 @@
 
   <!-- ✅ MOBILE OVERLAY CONTENT -->
   <div class="mobile-overlay">
-    <div class="tagline">
-      Every site is designed with care, tailored to your brand, and delivered faster than traditional methods—so you can focus on growing while we handle the <span class="highlight">web</span>.
-    </div>
     <div class="leftblock">
       <h2>Innovation that Connects and <span class="highlight">Resonates</span>.</h2>
       <p>Your Digital Revolution begins with SwiftSite AI. We craft stunning websites, logos, and branding that <span class="highlight">bring your vision to life</span>.</p>
       <a href="services.html" class="cta-btn">GET STARTED</a>
     </div>
-  </div>
 
-  <!-- Desktop sections (scroll space) -->
-  <main>
-    <section id="services" style="height:100vh;"></section>
-    <section id="about" style="height:100vh;"></section>
-    <section id="contact" style="height:100vh;"></section>
-  </main>
+    <div class="tagline">
+      Every site is designed with care, tailored to your brand, and delivered faster than traditional methods—so you can focus on growing while we handle the <span class="highlight">web</span>.
+    </div>
+  </div>
 
   <canvas id="bg"></canvas>
 
   <!-- Scroll-to-top -->
   <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'});"><i class="fas fa-arrow-up"></i></button>
 
-  <!-- Scripts (Three.js blob, etc.) — unchanged -->
+  <!-- Scripts (icons, blob, etc.) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
 </body>
 </html>
