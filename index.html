@@ -34,7 +34,7 @@
       width: 100%; 
       height: 100%; 
       z-index: -2;
-      pointer-events: none; /* ensures links are clickable */
+      pointer-events: none;
     }
 
     /* NAV BAR */
@@ -48,7 +48,7 @@
       align-items: center; 
       justify-content: center;
       gap: 28px; 
-      z-index: 200; /* higher than bg */
+      z-index: 200;
     }
     .navbar a { 
       position: relative;
@@ -68,10 +68,9 @@
     .navbar a:hover { 
       transform: scale(1.2);
       color: #00ffff;
-      box-shadow: 0 0 15px rgba(0,255,255,0.9);
+      box-shadow: 0 0 15px rgba(0,255,255,0.9), 0 0 30px rgba(0,255,255,0.6);
       background: rgba(255,255,255,1);
     }
-
     .navbar a::after {
       content: attr(data-tooltip);
       position: absolute;
@@ -91,7 +90,7 @@
     .navbar a:hover::after { 
       opacity: 1; 
       background: rgba(0,255,255,0.9);
-      color: black;
+      color: #000;
       box-shadow: 0 0 10px rgba(0,255,255,0.8);
     }
 
@@ -108,22 +107,34 @@
     @keyframes typing { to { width:100%; } }
     @keyframes blink { 50%{ border-color:transparent; } }
 
-    /* HERO (desktop default bottom-left) */
-    .hero {
+    /* HERO (desktop default bottom-left/right) */
+    .tagline {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      max-width: 400px;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      color: #333;
+      z-index: 30;
+      text-align: right;
+    }
+    .tagline .highlight {
+      background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .leftblock {
       position: absolute;
       bottom: 40px;
       left: 40px;
-      max-width: 600px;
-      text-align: left;
+      max-width: 500px;
+      color: #333;
       z-index: 30;
     }
-    .tagline { font-size:1.6rem; line-height:1.6; color:#333; margin-bottom: 20px;}
-    .tagline .highlight { background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .leftblock h2 { font-size:3.2rem; line-height:1.3; color:#333; }
+    .leftblock h2 { font-size:3.2rem; line-height:1.3; }
     .leftblock h2 .highlight { background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .leftblock p { margin-top:14px; font-size:1.5rem; line-height:1.6; color:#333; }
+    .leftblock p { margin-top:14px; font-size:1.5rem; line-height:1.6; }
     .leftblock p .highlight { background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .leftblock .cta-btn { display:inline-block; margin-top:26px; padding:14px 32px; font-size:1.1rem; font-weight:bold;
@@ -134,22 +145,17 @@
       box-shadow:0 0 20px rgba(0,255,255,0.8),0 0 40px rgba(0,200,255,0.6);
     }
 
-    /* ✅ Mobile overrides */
+    /* ✅ MOBILE */
     @media (max-width: 768px) {
       .header img { height:60px; }
       .brand { font-size:2rem; border-right:none; animation:none; width:auto; }
 
-      .hero {
+      .tagline, .leftblock {
         position: relative !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        min-height: 100vh;
-        padding: 0 20px 100px;
+        text-align: center !important;
+        margin: 20px auto;
+        max-width: 90%;
       }
-      .tagline, .leftblock { margin: 20px 0; max-width: 90%; }
       .tagline { font-size: 1.2rem; }
       .leftblock h2 { font-size: 2rem; }
       .leftblock p { font-size: 1.1rem; }
@@ -175,6 +181,59 @@
       .navbar a { margin:0; font-size:20px; background:transparent; }
       .navbar a::after { display:none; }
     }
+
+    /* HAMBURGER MENU */
+    .hamburger { 
+      position: fixed; 
+      top: 20px; 
+      right: 20px; 
+      font-size: 28px; 
+      cursor: pointer; 
+      z-index: 300; 
+      color:#00ffff; 
+    }
+    .overlay {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 400;
+      color: white;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .overlay.active { display: flex; }
+    .overlay img { height:80px; margin-bottom:20px; }
+    .overlay h2 { font-size:2rem; margin-bottom:20px; color:#00ffff; }
+    .overlay form { 
+      background:white;
+      color:black;
+      padding:20px;
+      border-radius:12px;
+      max-width:400px;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .overlay input, .overlay textarea {
+      padding:10px;
+      border:1px solid #ccc;
+      border-radius:6px;
+      font-size:1rem;
+    }
+    .overlay button {
+      padding:12px;
+      background:#00ffff;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    .overlay button:hover { background:#0088ff; color:white; }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
 </head>
@@ -183,6 +242,7 @@
     <source src="newpic.mp4" type="video/mp4">
   </video>
 
+  <!-- NAVBAR -->
   <div class="navbar">
     <a href="index.html" data-tooltip="Home"><i class="fas fa-home"></i></a>
     <a href="services.html" data-tooltip="Services"><i class="fas fa-briefcase"></i></a>
@@ -190,21 +250,33 @@
     <a href="contactfaq.html" data-tooltip="Contact"><i class="fas fa-envelope"></i></a>
   </div>
 
+  <!-- HEADER -->
   <header class="header" id="home">
     <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
     <h1 class="brand">SWIFTSITE AI</h1>
   </header>
 
+  <!-- HAMBURGER -->
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <div class="overlay" id="overlayMenu">
+    <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
+    <h2>Contact Us</h2>
+    <form action="https://formspree.io/f/xnnzykyd" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
   <!-- HERO -->
-  <div class="hero">
-    <div class="tagline">
-      Every site is designed with care, tailored to your brand, and delivered faster than traditional methods—so you can focus on growing while we handle the <span class="highlight">web</span>.
-    </div>
-    <div class="leftblock">
-      <h2>Innovation that Connects and <span class="highlight">Resonates</span>.</h2>
-      <p>Your Digital Revolution begins with SwiftSite AI. We craft stunning websites, logos, and branding that <span class="highlight">bring your vision to life</span>.</p>
-      <a href="services.html" class="cta-btn">GET STARTED</a>
-    </div>
+  <div class="tagline">
+    Every site is designed with care, tailored to your brand, and delivered faster than traditional methods—so you can focus on growing while we handle the <span class="highlight">web</span>.
+  </div>
+  <div class="leftblock">
+    <h2>Innovation that Connects and <span class="highlight">Resonates</span>.</h2>
+    <p>Your Digital Revolution begins with SwiftSite AI. We craft stunning websites, logos, and branding that <span class="highlight">bring your vision to life</span>.</p>
+    <a href="services.html" class="cta-btn">GET STARTED</a>
   </div>
 
   <canvas id="bg"></canvas>
@@ -227,7 +299,6 @@
     controls.enableRotate = false;
     controls.enablePan = false;
 
-    // Blob...
     const sphereGeometry = new THREE.SphereGeometry(1.8, 64, 64);
     sphereGeometry.positionData = [];
     const v3 = new THREE.Vector3();
@@ -291,6 +362,12 @@
       camera.updateProjectionMatrix();
       renderer.setSize(innerWidth,innerHeight);
     });
+
+    // Toggle hamburger overlay
+    window.toggleMenu=function(){
+      document.querySelector(".hamburger").classList.toggle("active");
+      document.querySelector("#overlayMenu").classList.toggle("active");
+    }
   </script>
 </body>
 </html>
