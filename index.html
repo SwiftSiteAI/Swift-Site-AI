@@ -8,7 +8,27 @@
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;width:100%;overflow-x:hidden;font-family:"Poppins",sans-serif;}
     body { background:white; }
-    canvas#bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+    /* VIDEO BACKGROUND */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+    }
+
+    /* BLOB CANVAS */
+    canvas#bg { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      z-index: -1;
+    }
 
     /* NAV BAR */
     .navbar { position: fixed; top: 0; left: 0; width: 80px; height: 100%;
@@ -17,8 +37,31 @@
     .navbar a { font-size: 22px; width: 46px; height: 46px;
       display:flex; align-items:center; justify-content:center;
       border-radius: 50%; background: rgba(255,255,255,0.7); color: #000;
-      transition: transform 0.25s ease, box-shadow 0.25s ease; text-decoration: none; }
+      transition: transform 0.25s ease, box-shadow 0.25s ease; text-decoration: none;
+      position: relative;
+    }
     .navbar a:hover { transform: scale(1.2); box-shadow: 0 0 12px rgba(0,180,255,0.8); }
+
+    /* TOOLTIP STYLING (horizontal to right) */
+    .navbar a::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: 50%;
+      left: 120%;  /* to the right */
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .navbar a:hover::after {
+      opacity: 1;
+    }
 
     /* HAMBURGER MENU */
     .hamburger { position: fixed; top: 24px; right: 30px; width: 30px; height: 24px;
@@ -35,7 +78,7 @@
     .overlay.active { opacity:1; pointer-events:auto; }
     .overlay-box { width:380px; max-width:90%; padding:40px; border-radius:20px;
       background: rgba(20,20,20,0.95); text-align:center; opacity:0; transform:scale(0.9);
-      transition: opacity 0.5s ease, transform 0.5s ease; position: relative; }
+      transition: opacity 0.5s ease, transform 0.5s ease; position: relative; max-height: 90vh; overflow-y: auto; }
     .overlay.active .overlay-box { opacity:1; transform:scale(1); }
     .overlay-box a { display:block; font-size:1.4rem; color:#fff; margin:18px 0;
       text-decoration:none; transition: color 0.3s, text-shadow 0.3s; }
@@ -73,16 +116,92 @@
       box-shadow:0 0 8px rgba(0,0,0,0.25); }
     .leftblock button:hover { background:#555; color:#00ffff;
       box-shadow:0 0 20px rgba(0,255,255,0.8),0 0 40px rgba(0,200,255,0.6); }
+
+    /* CONTACT BANNER INSIDE OVERLAY */
+    .contact-banner {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(0, 20, 40, 0.85);
+      box-shadow: 0 0 20px rgba(0,255,255,0.4), 0 0 40px rgba(0,136,255,0.3);
+      text-align: center;
+      border: 1px solid rgba(0,255,255,0.3);
+    }
+    .contact-banner img {
+      width: 90px;
+      height: auto;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 0 10px rgba(0,255,255,0.7));
+    }
+    .contact-banner h3 {
+      color: #00ffff;
+      margin-bottom: 8px;
+      font-size: 1.6rem;
+      text-shadow: 0 0 8px rgba(0,255,255,0.7);
+    }
+    .contact-banner p {
+      color: #ddd;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      box-shadow: inset 0 0 6px rgba(0,255,255,0.3);
+      transition: all 0.3s ease;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      box-shadow: 0 0 10px rgba(0,255,255,0.8), 0 0 20px rgba(0,136,255,0.6);
+    }
+    .contact-form textarea {
+      resize: none;
+      min-height: 80px;
+    }
+    .contact-form button {
+      padding: 12px;
+      border-radius: 30px;
+      border: none;
+      background: linear-gradient(90deg, #00ffff, #0088ff);
+      color: #000;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,255,255,0.7);
+    }
+    .contact-form button:hover {
+      background: linear-gradient(90deg, #0088ff, #00ffff);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0,255,255,0.9), 0 0 40px rgba(0,136,255,0.7);
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
 </head>
 <body>
+  <!-- VIDEO BACKGROUND -->
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="newpic.mp4" type="video/mp4">
+  </video>
+
+  <!-- NAVBAR with tooltips (FAQ removed) -->
   <div class="navbar">
-    <a href="#home"><i class="fas fa-home"></i></a>
-    <a href="#services"><i class="fas fa-briefcase"></i></a>
-    <a href="#about"><i class="fas fa-user"></i></a>
-    <a href="#faq"><i class="fas fa-question-circle"></i></a>
-    <a href="#contact"><i class="fas fa-envelope"></i></a>
+    <a href="index.html" data-tooltip="Home"><i class="fas fa-home"></i></a>
+    <a href="services.html" data-tooltip="Services"><i class="fas fa-briefcase"></i></a>
+    <a href="about.html" data-tooltip="About"><i class="fas fa-user"></i></a>
+    <a href="contactfaq.html" data-tooltip="Contact"><i class="fas fa-envelope"></i></a>
   </div>
 
   <div class="hamburger" onclick="toggleMenu()">
@@ -92,11 +211,24 @@
   <div id="overlayMenu" class="overlay">
     <div class="overlay-box">
       <span class="close-btn" onclick="toggleMenu()">&times;</span>
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contactfaq.html">Contact</a>
+
+      <!-- CONTACT BANNER -->
+      <div class="contact-banner">
+        <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="Logo">
+        <h3>Let’s Connect!</h3>
+        <p>We’d love to hear from you. Send us a quick message below.</p>
+
+        <form action="https://formspree.io/f/xnnzykyd" method="POST" class="contact-form">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="_replyto" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -117,10 +249,12 @@
 
   <section id="services" style="height:100vh;"></section>
   <section id="about" style="height:100vh;"></section>
-  <section id="faq" style="height:100vh;"></section>
   <section id="contact" style="height:100vh;"></section>
 
+  <!-- Blob Canvas -->
   <canvas id="bg"></canvas>
+
+  <!-- THREE.JS + BLOB SCRIPT -->
   <script type="module">
     import * as THREE from "https://cdn.skypack.dev/three@0.133.1";
     import { OrbitControls } from "https://cdn.skypack.dev/three@0.133.1/examples/jsm/controls/OrbitControls.js";
@@ -134,59 +268,11 @@
     renderer.setSize(innerWidth,innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setClearColor(0x000000, 0);
 
     new OrbitControls(camera,renderer.domElement);
 
-    // --- STARFIELD with soft glow --- //
-    function generateStarTexture(){
-      const size = 64;
-      const canvas = document.createElement("canvas");
-      canvas.width = size; canvas.height = size;
-      const ctx = canvas.getContext("2d");
-      const gradient = ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
-      gradient.addColorStop(0,"rgba(255,255,255,1)");
-      gradient.addColorStop(0.4,"rgba(200,200,200,0.9)");
-      gradient.addColorStop(1,"rgba(255,255,255,0)");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0,0,size,size);
-      return new THREE.CanvasTexture(canvas);
-    }
-
-    const starGeometry = new THREE.BufferGeometry();
-    const starCount = 600;
-    const positions = [];
-    const colors = [];
-    const color = new THREE.Color();
-
-    for (let i = 0; i < starCount; i++) {
-      const x = (Math.random() - 0.5) * 120;
-      const y = (Math.random() - 0.5) * 120;
-      const z = (Math.random() - 0.5) * 120;
-      positions.push(x, y, z);
-      color.setHSL(0,0,0.65 + Math.random()*0.25);
-      colors.push(color.r,color.g,color.b);
-    }
-
-    starGeometry.setAttribute("position", new THREE.Float32BufferAttribute(positions,3));
-    starGeometry.setAttribute("color", new THREE.Float32BufferAttribute(colors,3));
-
-    const starMaterial = new THREE.PointsMaterial({
-      size: 0.7,
-      map: generateStarTexture(),
-      vertexColors: true,
-      transparent: true,
-      alphaTest: 0.05,
-      depthWrite: false
-    });
-
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
-
-    function animateStars(time){
-      starMaterial.opacity = 0.8 + Math.sin(time * 0.001) * 0.05;
-    }
-
-    // --- BLOB --- //
+    // --- BLOB ---
     const sphereGeometry = new THREE.SphereGeometry(1.8, 64, 64);
     sphereGeometry.positionData = [];
     const v3 = new THREE.Vector3();
@@ -194,9 +280,15 @@
       v3.fromBufferAttribute(sphereGeometry.attributes.position,i);
       sphereGeometry.positionData.push(v3.clone());
     }
+
     const sphereMaterial = new THREE.MeshStandardMaterial({
-      color:0x00ffff, metalness:0.05, roughness:0.75, transparent:true, opacity:0
+      color:0x00ffff,
+      metalness:0.05,
+      roughness:0.75,
+      transparent:true,
+      opacity:0
     });
+
     const sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
     sphere.castShadow = true;
     scene.add(sphere);
@@ -208,6 +300,7 @@
     light1.shadow.bias = -0.001;
     scene.add(ambientLight, light1);
 
+    // shadow plane
     const groundGeometry = new THREE.PlaneGeometry(20, 20);
     const groundMaterial = new THREE.ShadowMaterial({ opacity: 0.25 });
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
@@ -245,6 +338,7 @@
       sphereGeometry.attributes.position.needsUpdate=true;
     }
 
+    // Fade-in bounce
     function easeOutBounce(x) {
       const n1 = 7.5625, d1 = 2.75;
       if (x < 1 / d1) return n1 * x * x;
@@ -252,7 +346,6 @@
       else if (x < 2.5 / d1) return n1 * (x -= 2.25 / d1) * x + 0.9375;
       else return n1 * (x -= 2.625 / d1) * x + 0.984375;
     }
-
     function fadeIn(){
       const elapsed = clock.getElapsedTime();
       const t = Math.min(1, elapsed/2);
@@ -261,7 +354,6 @@
 
     renderer.setAnimationLoop(()=>{
       fadeIn();
-      animateStars(clock.getElapsedTime());
 
       // smooth idle return
       sphereGeometry.positionData.forEach((p, idx) => {
