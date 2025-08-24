@@ -24,21 +24,45 @@
     .navbar a::after { content: attr(data-tooltip); position: absolute; top: 50%; left: 120%; transform: translateY(-50%); background: rgba(0,0,0,0.8); color: white; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
     .navbar a:hover::after { opacity: 1; }
 
-    /* HAMBURGER */
+    /* HAMBURGER BUTTON */
     .hamburger { position: fixed; top: 24px; right: 30px; width: 30px; height: 24px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; z-index: 1001; }
     .hamburger div { height: 3px; background:black; border-radius:2px; transition: all 0.4s ease; }
     .hamburger.active div:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
     .hamburger.active div:nth-child(2) { opacity:0; }
     .hamburger.active div:nth-child(3) { transform: rotate(-45deg) translate(6px,-6px); }
 
-    .overlay { height:100%; width:100%; position:fixed; top:0; left:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.3); backdrop-filter: blur(12px); opacity:0; pointer-events:none; transition: opacity 0.5s; z-index:1000; }
-    .overlay.active { opacity:1; pointer-events:auto; }
-    .overlay-box { width:380px; max-width:90%; padding:40px; border-radius:20px; background: rgba(20,20,20,0.95); text-align:center; opacity:0; transform:scale(0.9); transition: opacity 0.5s ease, transform 0.5s ease; position: relative; max-height: 90vh; overflow-y: auto; }
-    .overlay.active .overlay-box { opacity:1; transform:scale(1); }
-    .overlay-box a { display:block; font-size:1.4rem; color:#fff; margin:18px 0; text-decoration:none; transition: color 0.3s, text-shadow 0.3s; }
-    .overlay-box a:hover { color:#00ffff; text-shadow:0 0 10px rgba(0,255,255,0.8); }
-    .close-btn { position: absolute; top: 12px; right: 16px; font-size: 1.6rem; color: #fff; cursor: pointer; transition: color 0.3s; }
-    .close-btn:hover { color: #00ffff; }
+    /* HAMBURGER OVERLAY MENU */
+    .menu-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 1000;
+    }
+    .menu-overlay.active { opacity: 1; pointer-events: auto; }
+    .menu-overlay a {
+      font-size: 2rem;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .menu-overlay a:hover { color: #00ffff; }
+    .menu-overlay .close-btn {
+      position: absolute;
+      top: 20px; right: 30px;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+    }
 
     /* HEADER */
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
@@ -58,7 +82,6 @@
 
     /* ✅ MOBILE FIXES */
     @media (max-width: 768px) {
-      /* Header pinned top-left */
       .header { top:10px !important; left:10px !important; gap:10px !important; }
       .header img { height:50px !important; }
       .brand { font-size:1.4rem !important; animation:none !important; border-right:none !important; }
@@ -139,10 +162,73 @@
 
   <canvas id="bg"></canvas>
 
-  <!-- Scroll-to-top -->
-  <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'});"><i class="fas fa-arrow-up"></i></button>
+  <!-- ✅ HAMBURGER BUTTON -->
+  <div class="hamburger" id="hamburger">
+    <div></div><div></div><div></div>
+  </div>
 
-  <!-- Scripts (icons, blob, etc.) -->
+  <!-- ✅ HAMBURGER OVERLAY MENU -->
+  <div class="menu-overlay" id="menuOverlay">
+    <span class="close-btn" id="closeMenu">&times;</span>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contactfaq.html">Contact</a>
+  </div>
+
+  <!-- SCRIPTS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/perlin-noise/1.0.0/perlin.min.js"></script>
+
+  <!-- ✅ BLOB SCRIPT -->
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    let w, h;
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "rgba(0, 255, 255, 0.25)";
+      ctx.beginPath();
+      const cx = w / 2, cy = h / 2, baseR = 250;
+      for (let a = 0; a <= Math.PI * 2; a += 0.05) {
+        let n = noise.perlin2(Math.cos(a) + t, Math.sin(a) + t);
+        let r = baseR + n * 80;
+        let x = cx + r * Math.cos(a);
+        let y = cy + r * Math.sin(a);
+        if (a === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+      t += 0.003;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+
+  <!-- ✅ HAMBURGER TOGGLE SCRIPT -->
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const closeMenu = document.getElementById("closeMenu");
+
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      menuOverlay.classList.toggle("active");
+    });
+
+    closeMenu.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+      menuOverlay.classList.remove("active");
+    });
+  </script>
 </body>
 </html>
