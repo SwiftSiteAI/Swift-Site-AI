@@ -156,23 +156,28 @@
       .header img { height:60px; }
       .brand { font-size:2rem; border-right:none; animation:none; width:auto; }
 
-      body { padding-top:120px; }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 140px;
+        padding-bottom: 100px;
+      }
 
-      /* Centered and spaced body text */
       .tagline,
       .leftblock {
         position: relative !important;
-        margin: 40px auto;
+        margin: 20px auto;
         max-width: 90%;
         text-align: center;
-        display: block;
       }
       .tagline {
-        font-size: 1.1rem;
-        margin-top: 40px;
+        font-size: 1.2rem;
+        margin-top: 20px;
       }
       .leftblock {
-        margin-top: 50px;
+        margin-top: 40px;
       }
       .leftblock h2 {
         font-size: 2rem;
@@ -188,7 +193,6 @@
         margin-top: 20px;
       }
 
-      /* Navbar pinned bottom */
       .navbar {
         position: fixed !important;
         bottom: 0 !important;
@@ -208,6 +212,42 @@
       }
       .navbar a { margin:0; font-size:20px; background:transparent; }
       .navbar a::after { display:none; }
+
+      /* Fix contact banner */
+      .contact-banner {
+        margin-top: 20px;
+        text-align: center;
+        padding: 20px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+      }
+      .contact-banner img {
+        max-width: 80px;
+        margin-bottom: 12px;
+      }
+      .contact-banner h3 { font-size: 1.4rem; margin-bottom: 8px; color: #fff; }
+      .contact-banner p { font-size: 0.9rem; margin-bottom: 12px; color: #ddd; }
+      .contact-banner form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .contact-banner input,
+      .contact-banner textarea,
+      .contact-banner button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        font-size: 1rem;
+      }
+      .contact-banner textarea { min-height: 80px; resize: vertical; }
+      .contact-banner button {
+        background: #00ffff;
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+      }
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
@@ -258,9 +298,7 @@
 
   <div class="leftblock">
     <h2>Innovation that Connects and <span class="highlight">Resonates</span>.</h2>
-    <p>Your Digital Revolution begins with SwiftSite AI. We craft stunning websites, logos, and branding that <span class="highlight">bring your vision to life</span>.</p>
-    <a href="services.html" class="cta-btn">GET STARTED</a>
-  </div>
+    <p>Your Digital Revolution begins with SwiftSite AI.
   <!-- Content Sections (placeholder for scroll space) -->
   <main>
     <section id="services" style="height:100vh;"></section>
