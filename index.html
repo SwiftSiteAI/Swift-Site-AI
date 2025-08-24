@@ -9,17 +9,6 @@
   <meta name="description" content="SwiftSite AI creates stunning websites, logos, and branding tailored to your business — fast, modern, and affordable.">
   <meta name="keywords" content="website design, AI websites, web development, branding, landing page, business website, SwiftSite AI">
   <meta name="author" content="SwiftSite AI">
-  <meta property="og:title" content="SwiftSite AI - AI Powered Website Design">
-  <meta property="og:description" content="We build stunning websites, logos, and branding that bring your vision to life.">
-  <meta property="og:image" content="A_digital_vector_illustration_features_a_neon-blue.png">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourdomain.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SwiftSite AI">
-  <meta name="twitter:description" content="Stunning AI-powered websites, logos, and branding tailored to your brand.">
-  <meta name="twitter:image" content="A_digital_vector_illustration_features_a_neon-blue.png">
-
-  <link rel="icon" href="favicon.png" type="image/png">
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
@@ -44,10 +33,11 @@
       left: 0; 
       width: 100%; 
       height: 100%; 
-      z-index: -1;
+      z-index: -2;
+      pointer-events: none; /* ensures links are clickable */
     }
 
-    /* NAV BAR (Desktop default) */
+    /* NAV BAR */
     .navbar { 
       position: fixed; 
       top: 50%; 
@@ -58,9 +48,10 @@
       align-items: center; 
       justify-content: center;
       gap: 28px; 
-      z-index: 20; 
+      z-index: 200; /* higher than bg */
     }
     .navbar a { 
+      position: relative;
       font-size: 22px; 
       width: 46px; 
       height: 46px;
@@ -70,11 +61,16 @@
       border-radius: 50%; 
       background: rgba(255,255,255,0.7); 
       color: #000;
-      transition: transform 0.25s ease, box-shadow 0.25s ease; 
+      transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
       text-decoration: none;
-      position: relative;
+      z-index: 201;
     }
-    .navbar a:hover { transform: scale(1.2); box-shadow: 0 0 12px rgba(0,180,255,0.8); }
+    .navbar a:hover { 
+      transform: scale(1.2);
+      color: #00ffff;
+      box-shadow: 0 0 15px rgba(0,255,255,0.9);
+      background: rgba(255,255,255,1);
+    }
 
     .navbar a::after {
       content: attr(data-tooltip);
@@ -90,71 +86,61 @@
       white-space: nowrap;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.25s ease, background 0.25s ease, color 0.25s ease;
     }
-    .navbar a:hover::after { opacity: 1; }
-
-    /* HAMBURGER MENU */
-    .hamburger { position: fixed; top: 24px; right: 30px; width: 30px; height: 24px;
-      display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; z-index: 1001; }
-    .hamburger div { height: 3px; background:black; border-radius:2px; transition: all 0.4s ease; }
-    .hamburger.active div:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-    .hamburger.active div:nth-child(2) { opacity:0; }
-    .hamburger.active div:nth-child(3) { transform: rotate(-45deg) translate(6px,-6px); }
-
-    .overlay { height:100%; width:100%; position:fixed; top:0; left:0;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(0,0,0,0.3); backdrop-filter: blur(12px);
-      opacity:0; pointer-events:none; transition: opacity 0.5s; z-index:1000; }
-    .overlay.active { opacity:1; pointer-events:auto; }
-    .overlay-box { width:380px; max-width:90%; padding:40px; border-radius:20px;
-      background: rgba(20,20,20,0.95); text-align:center; opacity:0; transform:scale(0.9);
-      transition: opacity 0.5s ease, transform 0.5s ease; position: relative; max-height: 90vh; overflow-y: auto; }
-    .overlay.active .overlay-box { opacity:1; transform:scale(1); }
-    .overlay-box a { display:block; font-size:1.4rem; color:#fff; margin:18px 0;
-      text-decoration:none; transition: color 0.3s, text-shadow 0.3s; }
-    .overlay-box a:hover { color:#00ffff; text-shadow:0 0 10px rgba(0,255,255,0.8); }
-
-    .close-btn { position: absolute; top: 12px; right: 16px; font-size: 1.6rem;
-      color: #fff; cursor: pointer; transition: color 0.3s; }
-    .close-btn:hover { color: #00ffff; }
+    .navbar a:hover::after { 
+      opacity: 1; 
+      background: rgba(0,255,255,0.9);
+      color: black;
+      box-shadow: 0 0 10px rgba(0,255,255,0.8);
+    }
 
     /* HEADER */
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
     .header { position: fixed; top:20px; left:20px; display:flex; align-items:center; gap:16px; z-index:30; }
-    .header img { height:80px; width:auto; filter: drop-shadow(0 0 16px rgba(0,255,255,0.9)); }
+    .header img { height:80px; filter: drop-shadow(0 0 16px rgba(0,255,255,0.9)); }
     .brand { font-family:'Great Vibes',cursive; font-size: clamp(36px,4vw,64px);
       background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-      white-space:nowrap; overflow:hidden; border-right:3px solid rgba(0,255,255,0.8);
-      width:0; animation: typing 5s steps(30,end) forwards, blink 0.8s step-end infinite; }
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      border-right:3px solid rgba(0,255,255,0.8);
+      white-space:nowrap; overflow:hidden; width:0;
+      animation: typing 5s steps(30,end) forwards, blink 0.8s step-end infinite; }
     @keyframes typing { to { width:100%; } }
     @keyframes blink { 50%{ border-color:transparent; } }
 
-    /* HERO (default desktop) */
-    .hero { position: relative; z-index: 30; padding: 160px 40px; max-width: 800px; }
-    .tagline { font-size:1.6rem; line-height:1.6; color:#333; text-shadow:0 2px 6px rgba(0,0,0,0.3); margin-bottom: 20px;}
+    /* HERO (desktop default bottom-left) */
+    .hero {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      max-width: 600px;
+      text-align: left;
+      z-index: 30;
+    }
+    .tagline { font-size:1.6rem; line-height:1.6; color:#333; margin-bottom: 20px;}
     .tagline .highlight { background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-    .leftblock h2 { font-size:3.2rem; line-height:1.3; color:#333; text-shadow:0 2px 6px rgba(0,0,0,0.3); }
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .leftblock h2 { font-size:3.2rem; line-height:1.3; color:#333; }
     .leftblock h2 .highlight { background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-    .leftblock p { margin-top:14px; font-size:1.5rem; line-height:1.6; color:#333; text-shadow:0 2px 6px rgba(0,0,0,0.3); }
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .leftblock p { margin-top:14px; font-size:1.5rem; line-height:1.6; color:#333; }
     .leftblock p .highlight { background: linear-gradient(to bottom,#00ffff 0%,#0088ff 100%);
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .leftblock .cta-btn { display:inline-block; margin-top:26px; padding:14px 32px; font-size:1.1rem; font-weight:bold;
-      border:none; border-radius:40px; background:#555; color:#00ffff; cursor:pointer; text-decoration:none; transition:all 0.35s ease;
+      border:none; border-radius:40px; background:#555; color:#00ffff; text-decoration:none; transition:all 0.35s ease;
       box-shadow:0 0 8px rgba(0,0,0,0.25); }
-    .leftblock .cta-btn:hover { background:#555; color:#00ffff;
-      box-shadow:0 0 20px rgba(0,255,255,0.8),0 0 40px rgba(0,200,255,0.6); }
+    .leftblock .cta-btn:hover { 
+      background:#555; color:#00ffff;
+      box-shadow:0 0 20px rgba(0,255,255,0.8),0 0 40px rgba(0,200,255,0.6);
+    }
 
-    /* ✅ Mobile fixes only */
+    /* ✅ Mobile overrides */
     @media (max-width: 768px) {
-      .header { top:10px; left:10px; gap:10px; }
       .header img { height:60px; }
       .brand { font-size:2rem; border-right:none; animation:none; width:auto; }
 
       .hero {
+        position: relative !important;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -163,11 +149,7 @@
         min-height: 100vh;
         padding: 0 20px 100px;
       }
-      .tagline, .leftblock {
-        position: relative !important;
-        margin: 20px 0;
-        max-width: 90%;
-      }
+      .tagline, .leftblock { margin: 20px 0; max-width: 90%; }
       .tagline { font-size: 1.2rem; }
       .leftblock h2 { font-size: 2rem; }
       .leftblock p { font-size: 1.1rem; }
@@ -188,7 +170,7 @@
         background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(6px);
         border-top: 1px solid rgba(0,0,0,0.15);
-        z-index: 100;
+        z-index: 200;
       }
       .navbar a { margin:0; font-size:20px; background:transparent; }
       .navbar a::after { display:none; }
@@ -208,31 +190,8 @@
     <a href="contactfaq.html" data-tooltip="Contact"><i class="fas fa-envelope"></i></a>
   </div>
 
-  <div class="hamburger" onclick="toggleMenu()"><div></div><div></div><div></div></div>
-
-  <div id="overlayMenu" class="overlay">
-    <div class="overlay-box">
-      <span class="close-btn" onclick="toggleMenu()">&times;</span>
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="about.html">About</a>
-      <a href="contactfaq.html">Contact</a>
-      <div class="contact-banner">
-        <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo" loading="lazy">
-        <h3>Let’s Connect!</h3>
-        <p>We’d love to hear from you. Send us a quick message below.</p>
-        <form action="https://formspree.io/f/xnnzykyd" method="POST" class="contact-form">
-          <input type="text" name="name" placeholder="Your Name" required>
-          <input type="email" name="_replyto" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Your Message" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <header class="header" id="home">
-    <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo" loading="lazy">
+    <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
     <h1 class="brand">SWIFTSITE AI</h1>
   </header>
 
@@ -248,15 +207,8 @@
     </div>
   </div>
 
-  <!-- Blob Canvas -->
   <canvas id="bg"></canvas>
 
-  <!-- Scroll-to-top button -->
-  <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'});">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-
-  <!-- THREE.JS + SCRIPT -->
   <script type="module" defer>
     import * as THREE from "https://cdn.skypack.dev/three@0.133.1";
     import { OrbitControls } from "https://cdn.skypack.dev/three@0.133.1/examples/jsm/controls/OrbitControls.js";
@@ -268,13 +220,14 @@
 
     const renderer = new THREE.WebGLRenderer({canvas:document.getElementById("bg"),antialias:true,alpha:true});
     renderer.setSize(innerWidth,innerHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setClearColor(0x000000, 0);
 
-    new OrbitControls(camera,renderer.domElement);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enableRotate = false;
+    controls.enablePan = false;
 
-    // --- BLOB ---
+    // Blob...
     const sphereGeometry = new THREE.SphereGeometry(1.8, 64, 64);
     sphereGeometry.positionData = [];
     const v3 = new THREE.Vector3();
@@ -282,92 +235,54 @@
       v3.fromBufferAttribute(sphereGeometry.attributes.position,i);
       sphereGeometry.positionData.push(v3.clone());
     }
-
-    const sphereMaterial = new THREE.MeshStandardMaterial({
-      color:0x00ffff,
-      metalness:0.05,
-      roughness:0.75,
-      transparent:true,
-      opacity:0
-    });
-
+    const sphereMaterial = new THREE.MeshStandardMaterial({color:0x00ffff,metalness:0.05,roughness:0.75,transparent:true,opacity:0});
     const sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
-    sphere.castShadow = true;
     scene.add(sphere);
 
     const ambientLight = new THREE.AmbientLight(0x00ffff, 0.2);
-    const light1 = new THREE.DirectionalLight(0xffffff,0.6);
-    light1.position.set(5,5,5); 
-    light1.castShadow = true;
-    scene.add(ambientLight, light1);
-
-    // ✅ stable point light
     const pointLight = new THREE.PointLight(0xffffff, 0.6);
-    pointLight.position.set(0, 3, 4);
-    pointLight.castShadow = true;
-    scene.add(pointLight);
+    pointLight.position.set(0,3,4);
+    scene.add(ambientLight, pointLight);
 
     const noise = openSimplexNoise.makeNoise4D(Date.now());
     const clock = new THREE.Clock();
+    let lastMouseX=0,lastMouseY=0;
 
-    let lastMouseX = 0, lastMouseY = 0;
-
-    window.addEventListener("mousemove", (e) => {
-      lastMouseX = (e.clientX / innerWidth - 0.5);
-      lastMouseY = (e.clientY / innerHeight - 0.5);
-      morphBlob(0.05, lastMouseX+lastMouseY);
+    window.addEventListener("mousemove", e=>{
+      lastMouseX=(e.clientX/innerWidth-0.5);
+      lastMouseY=(e.clientY/innerHeight-0.5);
+      morphBlob(0.05,lastMouseX+lastMouseY);
     });
-
-    // Disable scroll zoom (only slight idle morph)
-    window.addEventListener("scroll", () => {
-      morphBlob(0.05, lastMouseX+lastMouseY);
-    });
+    window.addEventListener("scroll",()=>{ morphBlob(0.05,lastMouseX+lastMouseY); });
 
     function morphBlob(scrollFactor, mouseFactor){
-      const morphStrength = Math.abs(scrollFactor + mouseFactor);
+      const morphStrength = Math.abs(scrollFactor+mouseFactor);
       sphereGeometry.positionData.forEach((p,idx)=>{
-        const n = Math.max(0, noise(p.x,p.y,p.z, morphStrength));
-        v3.copy(p).addScaledVector(p, n * 1.0);
-        sphereGeometry.attributes.position.setXYZ(
-          idx,
-          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getX(idx), v3.x, 0.15),
-          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getY(idx), v3.y, 0.15),
-          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getZ(idx), v3.z, 0.15)
-        );
+        const n = Math.max(0, noise(p.x,p.y,p.z,morphStrength));
+        v3.copy(p).addScaledVector(p,n*1.0);
+        sphereGeometry.attributes.position.setXYZ(idx,
+          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getX(idx),v3.x,0.15),
+          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getY(idx),v3.y,0.15),
+          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getZ(idx),v3.z,0.15));
       });
       sphereGeometry.computeVertexNormals();
       sphereGeometry.attributes.position.needsUpdate=true;
     }
 
-    // Fade-in bounce
-    function easeOutBounce(x) {
-      const n1 = 7.5625, d1 = 2.75;
-      if (x < 1 / d1) return n1 * x * x;
-      else if (x < 2 / d1) return n1 * (x -= 1.5 / d1) * x + 0.75;
-      else if (x < 2.5 / d1) return n1 * (x -= 2.25 / d1) * x + 0.9375;
-      else return n1 * (x -= 2.625 / d1) * x + 0.984375;
-    }
-    function fadeIn(){
-      const elapsed = clock.getElapsedTime();
-      const t = Math.min(1, elapsed/2);
-      sphereMaterial.opacity = easeOutBounce(t);
-    }
+    function easeOutBounce(x){const n1=7.5625,d1=2.75;if(x<1/d1)return n1*x*x;else if(x<2/d1)return n1*(x-=1.5/d1)*x+0.75;else if(x<2.5/d1)return n1*(x-=2.25/d1)*x+0.9375;else return n1*(x-=2.625/d1)*x+0.984375;}
+    function fadeIn(){const elapsed=clock.getElapsedTime();const t=Math.min(1,elapsed/2);sphereMaterial.opacity=easeOutBounce(t);}
 
     renderer.setAnimationLoop(()=>{
       fadeIn();
-      // smooth idle return
-      sphereGeometry.positionData.forEach((p, idx) => {
-        sphereGeometry.attributes.position.setXYZ(
-          idx,
-          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getX(idx), p.x, 0.02),
-          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getY(idx), p.y, 0.02),
-          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getZ(idx), p.z, 0.02)
-        );
+      sphereGeometry.positionData.forEach((p,idx)=>{
+        sphereGeometry.attributes.position.setXYZ(idx,
+          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getX(idx),p.x,0.02),
+          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getY(idx),p.y,0.02),
+          THREE.MathUtils.lerp(sphereGeometry.attributes.position.getZ(idx),p.z,0.02));
       });
       sphereGeometry.computeVertexNormals();
-      sphereGeometry.attributes.position.needsUpdate = true;
-
-      sphere.rotation.y += 0.003;
+      sphereGeometry.attributes.position.needsUpdate=true;
+      sphere.rotation.y+=0.003;
       renderer.render(scene,camera);
     });
 
@@ -375,16 +290,6 @@
       camera.aspect=innerWidth/innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(innerWidth,innerHeight);
-    });
-
-    window.toggleMenu=function(){
-      document.querySelector(".hamburger").classList.toggle("active");
-      document.querySelector("#overlayMenu").classList.toggle("active");
-    }
-
-    const scrollBtn=document.getElementById("scrollTopBtn");
-    window.addEventListener("scroll",()=>{
-      scrollBtn.style.display = (document.documentElement.scrollTop>200)?"block":"none";
     });
   </script>
 </body>
