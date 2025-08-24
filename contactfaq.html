@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ • SwiftSite AI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <style>
+    :root {
+      --cyan:#00e5ff;
+      --darkblue:#003366;
+      --text:#f6f7fb;
+      --muted:#cdd3df;
+      --radius:14px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:system-ui, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      position:relative;
+      z-index:1;
+    }
+
+    /* Full Background Video */
+    .video-background {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      z-index:-1;
+    }
+
+    /* Sidebar */
+    nav.sidebar {
+      position:fixed;top:0;left:0;bottom:0;
+      width:80px;
+      display:flex;flex-direction:column;align-items:center;
+      padding:20px 8px;
+      z-index:1000;
+      background:transparent;
+    }
+    .brand-logo{
+      width:60px;height:60px;margin-bottom:20px;border-radius:50%;overflow:hidden;animation:pulseGlow 2s infinite;cursor:pointer;
+    }
+    .brand-logo img{width:100%;height:100%;object-fit:cover}
+    .nav-links{display:flex;flex-direction:column;gap:22px}
+    .nav-links a{
+      display:grid;place-items:center;
+      width:48px;height:48px;
+      border-radius:12px;
+      color:#fff;
+      background:rgba(0,0,0,0.6);
+      border:1px solid rgba(0,229,255,0.4);
+      transition:.3s;
+      text-decoration:none;
+      position:relative;
+    }
+    .nav-links a:hover{
+      color:var(--cyan);
+      background:rgba(0,0,0,0.85);
+      box-shadow:0 0 12px var(--cyan);
+    }
+    .nav-links a::after{
+      content:attr(data-label);
+      position:absolute;left:60px;
+      padding:6px 10px;border-radius:8px;
+      background:#0e0f14;color:#fff;
+      font-size:.85rem;
+      opacity:0;translate:-6px 0;
+      transition:.3s;pointer-events:none;
+    }
+    .nav-links a:hover::after{opacity:1;translate:0}
+
+    /* Hero */
+    header.hero {
+      display:grid;place-items:center;height:100vh;text-align:center;
+    }
+    header.hero h1 {
+      font-size:clamp(2.5rem,6vw,4rem);
+      font-weight:800;
+      color:#fff; /* white text */
+      text-shadow:0 0 12px rgba(0,229,255,0.7), 0 2px 4px rgba(0,0,0,0.9);
+      animation:popIn 1.2s ease forwards;
+    }
+    header.hero p {
+      max-width:800px;
+      margin:25px auto 0;
+      font-size:1.6rem;
+      font-weight:500;
+      color:#fff;
+      text-shadow:0 2px 12px rgba(0,0,0,0.95);
+      animation:fadeIn 1.8s ease forwards;
+    }
+
+    @keyframes popIn {
+      0% { transform:scale(0.6); opacity:0; }
+      80% { transform:scale(1.05); opacity:1; }
+      100% { transform:scale(1); }
+    }
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(20px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+
+    /* Brand highlight */
+    .brand-highlight {
+      color: var(--cyan);
+      text-shadow: 0 0 12px var(--cyan);
+      font-weight: 700;
+    }
+
+    /* FAQ */
+    section#faq {padding:80px 32px;max-width:1000px;margin:auto}
+    h2.section-title {
+      text-align:center;font-size:2.6rem;font-weight:800;
+      background:linear-gradient(90deg,var(--cyan),var(--darkblue));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      text-shadow:0 0 15px rgba(0,229,255,.6);
+      margin-bottom:40px;
+    }
+    .faq-grid {display:grid;gap:18px;}
+    .faq-item {
+      background:rgba(0,0,0,0.7);
+      border:1px solid rgba(0,229,255,0.25);
+      border-radius:var(--radius);
+      padding:18px;
+      cursor:pointer;
+      transition:.3s;
+      backdrop-filter:blur(6px);
+    }
+    .faq-item:hover {
+      box-shadow:0 0 20px var(--cyan);
+      background:rgba(0,0,0,0.85);
+    }
+    .faq-question {
+      font-weight:600;
+      font-size:1.15rem;
+      display:flex;
+      justify-content:flex-start; /* fix spacing */
+      align-items:center;
+      gap:8px; /* spacing between text and icon */
+      color:#fff;
+      text-shadow:0 1px 6px rgba(0,0,0,0.9);
+    }
+    .faq-question i {
+      margin-left:auto; /* keeps icon to the right */
+      transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-question i {transform: rotate(180deg);}
+    .faq-answer {
+      max-height:0;
+      overflow:hidden;
+      padding-top:0;
+      opacity:0;
+      transform:translateY(-10px);
+      transition:max-height .5s ease, opacity .4s ease, transform .4s ease;
+      color:var(--muted);
+      text-shadow:0 1px 6px rgba(0,0,0,0.8);
+    }
+    .faq-item.active .faq-answer {
+      max-height:500px;
+      padding-top:12px;
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* Contact Us Section */
+    .contact-section {
+      padding:80px 20px;
+      max-width:1200px;
+      margin:80px auto;
+    }
+    .contact-container {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      align-items:center;
+      background:rgba(0,0,0,0.65);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 0 30px rgba(0,229,255,0.2);
+      backdrop-filter:blur(10px);
+    }
+    .contact-image {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:rgba(0,0,0,0.6);
+    }
+    .contact-image img {
+      width:70%;
+      height:auto;
+      object-fit:contain;
+      filter:drop-shadow(0 0 12px var(--cyan));
+    }
+    .contact-form {
+      padding:40px;
+      color:#fff;
+    }
+    .contact-form h2 {
+      font-size:2rem;
+      margin-bottom:15px;
+      text-shadow:0 2px 8px rgba(0,0,0,0.9);
+    }
+    .contact-form h2 span {
+      color:var(--cyan);
+      text-shadow:0 0 12px var(--cyan);
+    }
+    .contact-form p {
+      font-size:1.1rem;
+      margin-bottom:25px;
+      color:#ddd;
+    }
+    .form-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+    .contact-form input, .contact-form textarea {
+      width:100%;
+      padding:14px;
+      border-radius:8px;
+      border:1px solid rgba(0,229,255,0.4);
+      background:rgba(20,20,30,0.9);
+      color:#fff;
+      font-size:1rem;
+      transition:.3s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline:none;
+      border-color:var(--cyan);
+      box-shadow:0 0 12px var(--cyan);
+    }
+    .contact-form textarea {
+      margin-top:15px;
+      min-height:140px;
+      resize:vertical;
+    }
+    .contact-form button {
+      margin-top:20px;
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--cyan),#006699);
+      color:#fff;
+      font-size:1.1rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:.3s;
+    }
+    .contact-form button:hover {
+      transform:translateY(-2px);
+      box-shadow:0 0 20px var(--cyan);
+    }
+
+    /* Footer */
+    footer{text-align:center;padding:40px 20px;color:var(--muted);text-shadow:0 1px 6px rgba(0,0,0,0.8);}
+    footer a{color:var(--cyan);margin:0 10px;text-decoration:none}
+    footer a:hover{text-shadow:0 0 10px var(--cyan)}
+
+    /* Glow Animation */
+    @keyframes pulseGlow {
+      0%{box-shadow:0 0 8px var(--cyan);}
+      50%{box-shadow:0 0 22px var(--cyan);}
+      100%{box-shadow:0 0 8px var(--cyan);}
+    }
+  </style>
+</head>
+<body>
+  <!-- Full Background Video -->
+  <video autoplay muted loop playsinline preload="auto" class="video-background">
+    <source src="bluedata.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar">
+    <a class="brand-logo" href="index.html"><img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="Logo"></a>
+    <div class="nav-links">
+      <a href="index.html" data-label="Home"><i class="fa-solid fa-house"></i></a>
+      <a href="about.html" data-label="About"><i class="fa-solid fa-user"></i></a>
+      <a href="services.html" data-label="Services"><i class="fa-solid fa-cogs"></i></a>
+      <a href="contactfaq.html" data-label="Contact"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>Got Questions? We’ve Got Answers</h1>
+      <p>Everything you need to know about working with 
+         <span class="brand-highlight">SwiftSite AI</span> — clear, simple, and transparent.</p>
+    </div>
+  </header>
+
+  <!-- Contact Us Section -->
+  <section class="contact-section" id="contact" data-aos="fade-up">
+    <div class="contact-container">
+      <div class="contact-image">
+        <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="SwiftSite AI Logo">
+      </div>
+      <div class="contact-form">
+        <h2>Let’s <span>Build</span> Something Extraordinary</h2>
+        <p>Ready to bring your ideas to life with 
+           <span class="brand-highlight">SwiftSite AI</span>?  
+           Fill out the form and we’ll connect with you shortly.</p>
+        <form action="https://formspree.io/f/xnnzykyd" method="POST">
+          <div class="form-grid">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+          </div>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit">🚀 Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" data-aos="fade-up">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-question">What services does <span class="brand-highlight">SwiftSite AI</span> provide? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-answer"><p>We specialize in AI-powered web development, automation, branding, and hosting solutions tailored to your business needs.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">How long does it take to build a website? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-answer"><p>Most projects take 2–4 weeks depending on complexity and revisions.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Do you offer hosting and support? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-answer"><p>Yes! We provide reliable hosting and ongoing technical support to ensure your site runs smoothly.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Can you redesign my existing website? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-answer"><p>Absolutely — we can give your site a modern, AI-enhanced redesign while preserving your brand identity.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">How do I get started? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-answer"><p>Simply fill out the contact form above, and we’ll schedule a consultation to discuss your goals.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 <span class="brand-highlight">SwiftSite AI</span>. All rights reserved.</p>
+    <p>
+      <a href="index.html">Home</a>|
+      <a href="about.html">About</a>|
+      <a href="services.html">Services</a>|
+      <a href="contactfaq.html">Contact</a>
+    </p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+  <script>
+    // Accordion FAQ with auto-close
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const icon = item.querySelector('i');
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.faq-item').forEach(other => {
+          if(other !== item){ 
+            other.classList.remove('active'); 
+            other.querySelector('i').classList.replace('fa-minus','fa-plus');
+          }
+        });
+        item.classList.toggle('active');
+        if(item.classList.contains('active')){
+          icon.classList.replace('fa-plus','fa-minus');
+        } else {
+          icon.classList.replace('fa-minus','fa-plus');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

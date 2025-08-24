@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SwiftSite AI — Services • Pricing • Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+    :root {
+      --cyan:#00e5ff;
+      --darkblue:#003366;
+      --card:rgba(255,255,255,.08);
+      --text:#f6f7fb;
+      --muted:#cdd3df;
+      --radius:14px;
+      --navw:80px;
+      --speed:.3s;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:system-ui, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      background:#000;
+    }
+
+    /* Sidebar Transparent */
+    nav.sidebar {
+      position:fixed;
+      top:0; left:0; bottom:0;
+      width:var(--navw);
+      display:flex; flex-direction:column;
+      align-items:center; padding:20px 8px;
+      z-index:1000;
+      background:transparent !important;
+      border:none !important;
+      box-shadow:none !important;
+    }
+    .brand-logo{
+      width:60px; height:60px; margin-bottom:20px;
+      border-radius:50%; overflow:hidden;
+      animation:pulseGlow 2s infinite; cursor:pointer;
+    }
+    .brand-logo img{width:100%; height:100%; object-fit:cover}
+    .nav-links{display:flex; flex-direction:column; gap:22px}
+    .nav-links a{
+      display:grid; place-items:center;
+      width:48px; height:48px;
+      border-radius:12px;
+      color:#fff;
+      transition:all var(--speed);
+      position:relative;
+      text-decoration:none;
+    }
+    .nav-links a:hover{
+      color:var(--cyan);
+      text-shadow:0 0 12px var(--cyan);
+      transform:translateY(-2px)
+    }
+    .nav-links a::after{
+      content:attr(data-label);
+      position:absolute; left:60px;
+      padding:6px 10px; border-radius:8px;
+      background:#0e0f14; color:#fff;
+      font-size:.85rem; opacity:0;
+      translate:-6px 0; transition:all .3s;
+      pointer-events:none;
+    }
+    .nav-links a:hover::after{opacity:1; translate:0}
+
+    /* Mobile Drawer */
+    .menu-toggle{position:fixed; top:14px; left:14px; z-index:1100;
+      width:44px; height:44px; border:none; border-radius:12px;
+      display:none; place-items:center;
+      background:rgba(0,0,0,.6); color:#fff;
+    }
+    .drawer{position:fixed; inset:0 auto 0 0; width:260px;
+      background:rgba(0,0,0,.9); transform:translateX(-100%);
+      transition:.35s; z-index:1090; padding:18px}
+    .drawer.open{transform:translateX(0)}
+    .drawer .nav-links{gap:14px}
+    .drawer .nav-links a{justify-items:start; grid-template-columns:auto 1fr;
+      width:100%; height:auto; padding:10px 12px; border-radius:10px}
+    .drawer .nav-links a::after{display:none}
+
+    @media(max-width:768px){
+      nav.sidebar{display:none}
+      .menu-toggle{display:grid}
+      main{margin-left:0}
+    }
+
+    main { margin-left: 0 !important; }
+
+    /* HERO */
+    header.hero {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+    header.hero .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: -1;
+    }
+    header.hero h1 {
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      background:linear-gradient(45deg,var(--cyan),var(--darkblue));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:0 0 40px rgba(0,229,255,.45);
+    }
+    header.hero p {
+      max-width: 900px;
+      margin: 20px auto 30px;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    /* Buttons */
+    .cta{
+      display:inline-block;
+      padding:12px 26px;
+      border-radius:12px;
+      background:#000;
+      color:var(--cyan); font-weight:bold;
+      text-decoration:none;
+      border:1px solid transparent;
+      transition:all .3s;
+    }
+    .cta:hover{
+      border-color:var(--cyan);
+      box-shadow:0 0 12px var(--cyan);
+      transform:translateY(-2px);
+    }
+
+    /* MAIN with Video */
+    .main-with-video {position: relative; overflow: hidden;}
+    .section-video {position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;}
+    .main-with-video .overlay {position: absolute; inset: 0; background: rgba(0,0,0,0.25); z-index: -1;}
+    .main-with-video .content {position: relative; z-index: 2;}
+
+    /* Sections */
+    section{padding:80px 32px; max-width:1200px; margin:auto}
+    h2.section-title{
+      text-align:center;
+      font-size:2.8rem;
+      font-weight:800;
+      background:linear-gradient(90deg,var(--cyan),var(--darkblue));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:0 0 12px rgba(0, 229, 255, 0.6);
+      position:relative;
+      margin-bottom:30px;
+    }
+    h2.section-title::after {
+      content:"";
+      display:block;
+      width:70px;
+      height:3px;
+      margin:12px auto 0;
+      background:linear-gradient(90deg,var(--cyan),var(--darkblue));
+      border-radius:3px;
+      box-shadow:0 0 14px rgba(0,229,255,0.7);
+    }
+
+    /* Subheadings pure white */
+    p.section-sub{
+      text-align:center;
+      color:var(--text);
+      max-width:800px;
+      margin:0 auto 40px;
+      text-decoration:none !important;
+    }
+
+    /* Cards */
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:20px;
+      transition:all .3s;
+      text-decoration:none !important;
+    }
+    .card p {
+      color: var(--text);
+      text-decoration:none !important;
+    }
+
+    @media(max-width:880px){.cards{grid-template-columns:1fr}}
+
+    /* Portfolio hover */
+    #portfolio .card:hover {
+      box-shadow: 0 0 15px var(--cyan);
+      transform: translateY(-4px);
+    }
+    #portfolio .card h3, 
+    #portfolio .card p {
+      text-decoration:none !important;
+      color: var(--text);
+    }
+
+    /* Bigger Contact Subtitle */
+    #contact .section-sub {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    /* Floating Logo Bottom Right */
+    .floating-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 1200;
+      animation: pulseGlow 2s infinite;
+      cursor: pointer;
+    }
+    .floating-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Glow Pulse Animation */
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 8px var(--cyan); }
+      50% { box-shadow: 0 0 22px var(--cyan); }
+      100% { box-shadow: 0 0 8px var(--cyan); }
+    }
+
+    /* Footer */
+    footer{margin:40px 0; text-align:center; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <!-- Mobile hamburger -->
+  <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  <aside class="drawer">
+    <nav class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="about.html"><i class="fa-solid fa-user"></i> About Us</a>
+      <!-- FAQ link removed -->
+      <a href="contactfaq.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+    </nav>
+  </aside>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a class="brand-logo" href="#hero">
+      <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="Logo">
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-label="Home"><i class="fa-solid fa-house"></i></a>
+      <a href="about.html" data-label="About Us"><i class="fa-solid fa-user"></i></a>
+      <!-- FAQ icon removed -->
+      <a href="contactfaq.html" data-label="Contact"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <header id="hero" class="hero">
+      <video autoplay muted loop playsinline preload="auto" class="hero-video">
+        <source src="5091624-bluefire.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay"></div>
+      <div class="hero-inner">
+        <h1>Ignite Your Vision</h1>
+        <p>Modern, fast, and affordable websites — designed to stand out.</p>
+        <a class="cta" href="#services">Get Started</a>
+      </div>
+    </header>
+
+    <!-- Main Sections with Cyan Smoke Video -->
+    <div class="main-with-video">
+      <video autoplay muted loop playsinline preload="auto" class="section-video">
+        <source src="3045163-hd_1920_1080_25fps_cyan.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay"></div>
+
+      <div class="content">
+        <!-- Services -->
+        <section id="services">
+          <h2 class="section-title">Services</h2>
+          <p class="section-sub">From tailored websites to professional branding, we’ve got you covered.</p>
+          <div class="cards">
+            <div class="card">
+              <h3>Custom Builder</h3>
+              <p>Launch-ready websites built with smart automation and tailored design — customized to match your brand’s unique style.</p>
+            </div>
+            <div class="card">
+              <h3>Custom Design</h3>
+              <p>Handcrafted layouts and visuals designed to capture attention and align perfectly with your goals.</p>
+            </div>
+            <div class="card">
+              <h3>SEO & Performance</h3>
+              <p>Optimized for search engines and lightning-fast load times — built to rank higher and convert better.</p>
+            </div>
+            <div class="card">
+              <h3>Custom Logos</h3>
+              <p>Unique, professional logo designs that reflect your brand identity and leave a lasting impression.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing">
+          <h2 class="section-title">Pricing</h2>
+          <div class="cards">
+            <div class="card">
+              <h3>Starter</h3>
+              <p>$149</p>
+              <p>Launch your online presence with a sleek, single-page site. Perfect for individuals or simple projects.</p>
+              <a href="#contact" class="cta">Get Started</a>
+            </div>
+            <div class="card">
+              <h3>Growth</h3>
+              <p>$249</p>
+              <p>A multi-page website with custom sections and responsive design. Great for small businesses and startups.</p>
+              <a href="#contact" class="cta">Get Started</a>
+            </div>
+            <div class="card">
+              <h3>Pro</h3>
+              <p>$349</p>
+              <p>Advanced site with tailored design, SEO optimization, and performance enhancements. Built for scaling brands.</p>
+              <a href="#contact" class="cta">Get Started</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Portfolio -->
+        <section data-aos="fade-up" id="portfolio">
+          <h2 class="section-title">Portfolio</h2>
+          <p class="section-sub">A few of the sites we’ve crafted for clients.</p>
+          <div class="cards">
+            <a href="https://sweetstreatsbakeshop.com/" target="_blank" class="card">
+              <img alt="Sweet Treats Bakery" src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?q=80&amp;w=870&amp;auto=format&amp;fit=crop" style="width:100%; border-radius:10px; margin-bottom:12px;">
+              <h3>Sweet Treats Bakery</h3>
+              <p>Landing page for a local bakery featuring menu, specials, and contact info.</p>
+            </a>
+            <a href="https://www.fit-life-studio.com/" target="_blank" class="card">
+              <img alt="FitLife Studio" src="https://images.unsplash.com/photo-1616279969856-759f316a5ac1?q=80&amp;w=2565&amp;auto=format&amp;fit=crop" style="width:100%; border-radius:10px; margin-bottom:12px;">
+              <h3>FitLife Studio</h3>
+              <p>Full 5-page website including class schedule, trainer profiles, blog section, and contact form.</p>
+            </a>
+            <a href="https://tnova.io/" target="_blank" class="card">
+              <img alt="TechNova Solutions" src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&amp;w=2574&amp;auto=format&amp;fit=crop" style="width:100%; border-radius:10px; margin-bottom:12px;">
+              <h3>TechNova Solutions</h3>
+              <p>Professional website for a tech startup. Includes services, portfolio, team bios, and newsletter signup.</p>
+            </a>
+          </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact">
+          <h2 class="section-title">Contact</h2>
+          <p class="section-sub">Let’s build something amazing together. Fill out the form below and I’ll get back to you quickly.</p>
+          <div class="card" style="max-width:600px; margin:auto; text-align:left;">
+            <form id="contact-form" action="https://formspree.io/f/xnnzykyd" method="POST">
+              <label for="name">Name</label><br>
+              <input type="text" id="name" name="name" required style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:none; outline:none;"><br>
+              <label for="email">Email</label><br>
+              <input type="email" id="email" name="email" required style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:none; outline:none;"><br>
+              <label for="message">Message</label><br>
+              <textarea id="message" name="message" rows="5" required style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:none; outline:none;"></textarea><br>
+              <button type="submit" class="cta" style="width:100%; text-align:center;">Send Message</button>
+            </form>
+            <p id="form-status" style="margin-top:15px; font-weight:bold; display:none;"></p>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+          <p>© 2025 SwiftSite AI. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <!-- Floating Logo -->
+  <a href="#hero" class="floating-logo">
+    <img src="A_digital_vector_illustration_features_a_neon-blue.png" alt="Logo">
+  </a>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    const toggle = document.querySelector('.menu-toggle');
+    const drawer = document.querySelector('.drawer');
+    toggle.addEventListener('click', ()=> drawer.classList.toggle('open'));
+
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("form-status");
+
+    status.style.opacity = 0;
+    status.style.transition = "opacity 0.5s ease";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          status.style.display = "block";
+          status.textContent = "Thanks for your message!";
+          status.style.color = "var(--cyan)";
+          setTimeout(()=>{status.style.opacity = 1;}, 50);
+          form.reset();
+        } else {
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              status.textContent = data["errors"].map(e => e["message"]).join(", ");
+            } else {
+              status.textContent = "Oops! There was a problem submitting your form.";
+            }
+            status.style.color = "tomato";
+            status.style.display = "block";
+            setTimeout(()=>{status.style.opacity = 1;}, 50);
+          });
+        }
+      }).catch(error => {
+        status.textContent = "Oops! There was a problem submitting your form.";
+        status.style.color = "tomato";
+        status.style.display = "block";
+        setTimeout(()=>{status.style.opacity = 1;}, 50);
+      });
+    });
+  </script>
+</body>
+</html>
